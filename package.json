@@ -1,0 +1,54 @@
+{
+    "name":                                "huds-hud-training",
+    "description":                         "Training HUD for HUDS",
+    "version":                             "2.4.23",
+    "author": {
+        "name":                            "Dr. Ralf S. Engelschall",
+        "email":                           "rse@engelschall.com",
+        "url":                             "http://engelschall.com"
+    },
+    "license":                             "MIT",
+    "main":                                "package.json",
+    "huds": {
+        "client":                          "index.html"
+    },
+    "upd":                                 [],
+    "dependencies": {
+        "vue":                             "3.2.47",
+        "vue3-sfc-loader":                 "0.8.4",
+        "vue3-resize":                     "0.2.0",
+        "less":                            "4.1.3",
+        "@fortawesome/fontawesome-free":   "6.3.0",
+        "typopro-web":                     "4.2.6",
+        "mousetrap":                       "1.6.5",
+        "animejs":                         "3.2.1",
+        "howler":                          "2.2.3",
+        "@svgdotjs/svg.js":                "3.1.2",
+        "@svgdotjs/svg.filter.js":         "3.0.8",
+        "svg.easing.js":                   "2.0.0",
+        "svg.screenbbox.js":               "0.1.2",
+        "svg.path.js":                     "otm/svg.path.js#6981166",
+        "hashtag-similarity":              "0.9.3",
+        "moment":                          "2.29.4",
+        "canvas-confetti":                 "1.6.0",
+        "fitty":                           "2.3.6",
+        "@rse/soundfx":                    "1.1.3",
+        "@rse/soundlp":                    "1.1.1"
+    },
+    "peerDependencies": {
+        "huds":                            ">=2.0.0"
+    },
+    "devDependencies": {
+        "huds":                            "2.0.7",
+        "eslint":                          "8.36.0",
+        "eslint-config-standard":          "17.0.0",
+        "eslint-plugin-import":            "2.27.5",
+        "eslint-plugin-node":              "11.1.0",
+        "eslint-plugin-vue":               "9.9.0"
+    },
+    "scripts": {
+        "huds":                            "huds",
+        "start":                           "huds -v3 -a 0.0.0.0 -p 9999 -d live-sender:.,studio.yaml -b wss://XXXX:XXXX@pad.huds.io/mqtt/ -n live-receiver -r stream/engelschall/sender -s stream/engelschall/receiver",
+        "lint":                            "eslint --config eslint.yaml --ext js,vue *.vue"
+    }
+}
