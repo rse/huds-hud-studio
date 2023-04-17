@@ -41,60 +41,6 @@ attendance:
     iconcolor:             "#77aadd"
     textcolor:             "#e0f0ff"
 
-attendees:
-    opacity:               0.80
-    background:            "#336699"
-    namecolorbg:           "#003366"
-    namecolorfg:           "#e0f0ff"
-    noattendeestext:       "This training has still no identified attendees."
-    privacylevel:          closed
-
-feedback:
-    opacity:               0.80
-    surprisecolor1:        "#222222"
-    surprisecolor2:        "#f0f0f0"
-    surprisecolor3:        "#c0c0c0"
-    surprisecolor4:        "#000000"
-    smilecolor1:           "#221100"
-    smilecolor2:           "#d08840"
-    smilecolor3:           "#a05810"
-    smilecolor4:           "#ffffff"
-    frowncolor1:           "#99ccff"
-    frowncolor2:           "#336699"
-    frowncolor3:           "#003366"
-    frowncolor4:           "#ffffff"
-    sadnesscolor1:         "#cccccc"
-    sadnesscolor2:         "#333333"
-    sadnesscolor3:         "#000000"
-    sadnesscolor4:         "#ffffff"
-    thumbsupcolor1:        "#336699"
-    thumbsupcolor2:        "#e0f0ff"
-    thumbsupcolor3:        "#003366"
-    thumbsupcolor4:        "#ffffff"
-    thumbsdncolor1:        "#904800"
-    thumbsdncolor2:        "#ffb870"
-    thumbsdncolor3:        "#702200"
-    thumbsdncolor4:        "#ffffff"
-
-feeling:
-    opacity:               0.80
-    background:            "#336699"
-    textcolor:             "#e0f0ff"
-    stdbarcolor:           "#d0e0f0"
-    maxbarcolor:           "#ffffff"
-    bordercolor:           "#99ccff"
-    legendcolor:           "#ffffff"
-    c1color:               "#b06820"
-    c2color:               "#909090"
-    c3color:               "#336699"
-    c4color:               "#909090"
-    c5color:               "#b06820"
-    m1color:               "#905810"
-    m2color:               "#b06820"
-    m3color:               "#909090"
-    m4color:               "#336699"
-    m5color:               "#225588"
-
 closure:
     opacity:               0.75
     background1:           "#000000"
@@ -246,17 +192,8 @@ logo:
           <polygon class="cls-2" points="93.06 0 87.98 9.84 107.9 9.84 109.82 0 93.06 0"/>
         </svg>
 
-latency:
-    opacity:               0.80
-    background:            "#336699"
-    foreground:            "#ffffff"
-    iconcolor:             "#77aadd"
-
 confetti:
     opacity:               1.00
-
-snowfall:
-    opacity:               0.90
 
 agenda:
     opacity:               0.90

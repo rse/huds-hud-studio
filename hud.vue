@@ -38,66 +38,12 @@
             v-bind:titletext="config.title.titletext"
             v-bind:titlecolor="config.title.titlecolor"
         ></title-bar>
-        <feedback ref="feedback" class="feedback"
-            v-bind:opacity="config.feedback.opacity"
-            v-bind:surprisecolor1="config.feedback.surprisecolor1"
-            v-bind:surprisecolor2="config.feedback.surprisecolor2"
-            v-bind:surprisecolor3="config.feedback.surprisecolor3"
-            v-bind:surprisecolor4="config.feedback.surprisecolor4"
-            v-bind:smilecolor1="config.feedback.smilecolor1"
-            v-bind:smilecolor2="config.feedback.smilecolor2"
-            v-bind:smilecolor3="config.feedback.smilecolor3"
-            v-bind:smilecolor4="config.feedback.smilecolor4"
-            v-bind:frowncolor1="config.feedback.frowncolor1"
-            v-bind:frowncolor2="config.feedback.frowncolor2"
-            v-bind:frowncolor3="config.feedback.frowncolor3"
-            v-bind:frowncolor4="config.feedback.frowncolor4"
-            v-bind:sadnesscolor1="config.feedback.sadnesscolor1"
-            v-bind:sadnesscolor2="config.feedback.sadnesscolor2"
-            v-bind:sadnesscolor3="config.feedback.sadnesscolor3"
-            v-bind:sadnesscolor4="config.feedback.sadnesscolor4"
-            v-bind:thumbsupcolor1="config.feedback.thumbsupcolor1"
-            v-bind:thumbsupcolor2="config.feedback.thumbsupcolor2"
-            v-bind:thumbsupcolor3="config.feedback.thumbsupcolor3"
-            v-bind:thumbsupcolor4="config.feedback.thumbsupcolor4"
-            v-bind:thumbsdncolor1="config.feedback.thumbsdncolor1"
-            v-bind:thumbsdncolor2="config.feedback.thumbsdncolor2"
-            v-bind:thumbsdncolor3="config.feedback.thumbsdncolor3"
-            v-bind:thumbsdncolor4="config.feedback.thumbsdncolor4"
-        ></feedback>
         <attendance ref="attendance" class="attendance"
             v-bind:opacity="config.attendance.opacity"
             v-bind:background="config.attendance.background"
             v-bind:iconcolor="config.attendance.iconcolor"
             v-bind:textcolor="config.attendance.textcolor"
         ></attendance>
-        <attendees ref="attendees" class="attendees"
-            v-bind:opacity="config.attendees.opacity"
-            v-bind:background="config.attendees.background"
-            v-bind:namecolorbg="config.attendees.namecolorbg"
-            v-bind:namecolorfg="config.attendees.namecolorfg"
-            v-bind:noattendeestext="config.attendees.noattendeestext"
-            v-bind:privacylevel="config.attendees.privacylevel"
-        ></attendees>
-        <feeling ref="feeling" class="feeling"
-            v-bind:opacity="config.feeling.opacity"
-            v-bind:background="config.feeling.background"
-            v-bind:textcolor="config.feeling.textcolor"
-            v-bind:bordercolor="config.feeling.bordercolor"
-            v-bind:legendcolor="config.feeling.legendcolor"
-            v-bind:stdbarcolor="config.feeling.stdbarcolor"
-            v-bind:maxbarcolor="config.feeling.maxbarcolor"
-            v-bind:c1color="config.feeling.c1color"
-            v-bind:c2color="config.feeling.c2color"
-            v-bind:c3color="config.feeling.c3color"
-            v-bind:c4color="config.feeling.c4color"
-            v-bind:c5color="config.feeling.c5color"
-            v-bind:m1color="config.feeling.m1color"
-            v-bind:m2color="config.feeling.m2color"
-            v-bind:m3color="config.feeling.m3color"
-            v-bind:m4color="config.feeling.m4color"
-            v-bind:m5color="config.feeling.m5color"
-        ></feeling>
         <progress-bar ref="progressBar" class="progress"
             v-bind:opacity="config.progress.opacity"
             v-bind:donecolorbg="config.progress.donecolorbg"
@@ -195,12 +141,6 @@
             v-bind:segment3="config.timer.segment3"
             v-bind:segment4="config.timer.segment4"
         ></timer>
-        <latency ref="latency" class="latency"
-            v-bind:opacity="config.latency.opacity"
-            v-bind:background="config.latency.background"
-            v-bind:foreground="config.latency.foreground"
-            v-bind:iconcolor="config.latency.iconcolor"
-        ></latency>
         <closure ref="closure" class="closure"
             v-bind:opacity="config.closure.opacity"
             v-bind:background1="config.closure.background1"
@@ -224,9 +164,6 @@
         <confetti ref="confetti" class="confetti"
             v-bind:opacity="config.confetti.opacity"
         ></confetti>
-        <snowfall ref="snowfall" class="snowfall"
-            v-bind:opacity="config.snowfall.opacity"
-        ></snowfall>
     </div>
 </template>
 
@@ -253,23 +190,10 @@ body {
         bottom: 10px;
         width: 180px;
     }
-    > .attendees {
-        position: absolute;
-        top: 30px;
-        left: 30px;
-        width:  calc(100vh - 150px);
-        height: calc(100vh - 150px);
-    }
     > .title {
         position: absolute;
         right: 170px;
         bottom: 10px;
-        width: 540px;
-    }
-    > .feeling {
-        position: absolute;
-        right: 170px;
-        bottom: 100px;
         width: 540px;
     }
     > .progress {
@@ -285,12 +209,6 @@ body {
         right: 30px;
         width: 150px;
         height: auto;
-    }
-    > .feedback {
-        position: absolute;
-        right: 50px;
-        bottom: 100px;
-        width: 400px;
     }
     > .agenda {
         position: absolute;
@@ -325,25 +243,6 @@ body {
         height: 500px;
         left:   30px;
     }
-    > .latency {
-        position: absolute;
-        bottom: 120px;
-        left:   30px;
-    }
-    > .confetti {
-        position: absolute;
-        top:    0;
-        left:   0;
-        width:  100vw;
-        height: 100vh;
-    }
-    > .snowfall {
-        position: absolute;
-        top:    0;
-        left:   0;
-        width:  100vw;
-        height: 100vh;
-    }
     &.minimize {
         > .attendance {
             display: none;
@@ -357,15 +256,8 @@ body {
         > .logo {
             display: none;
         }
-        > .feeling {
-            bottom: 30px;
-        }
         > .feedback {
             bottom: 20px;
-        }
-        > .attendees {
-            width:  calc(100vh - 60px);
-            height: calc(100vh - 60px);
         }
         > .agenda {
             height: calc(100% - 60px);
@@ -379,9 +271,6 @@ body {
             height: calc(100vh - 30px);
         }
         > .timer {
-            bottom: 30px;
-        }
-        > .latency {
             bottom: 30px;
         }
     }
@@ -403,9 +292,6 @@ export default {
         "banner":       Vue.loadComponent("hud-widget-banner.vue"),
         "title-bar":    Vue.loadComponent("hud-widget-title.vue"),
         "attendance":   Vue.loadComponent("hud-widget-attendance.vue"),
-        "attendees":    Vue.loadComponent("hud-widget-attendees.vue"),
-        "feedback":     Vue.loadComponent("hud-widget-feedback.vue"),
-        "feeling":      Vue.loadComponent("hud-widget-feeling.vue"),
         "progress-bar": Vue.loadComponent("hud-widget-progress.vue"),
         "agenda":       Vue.loadComponent("hud-widget-agenda.vue"),
         "logo":         Vue.loadComponent("hud-widget-logo.vue"),
@@ -413,9 +299,7 @@ export default {
         "popup":        Vue.loadComponent("hud-widget-popup.vue"),
         "votes":        Vue.loadComponent("hud-widget-votes.vue"),
         "timer":        Vue.loadComponent("hud-widget-timer.vue"),
-        "latency":      Vue.loadComponent("hud-widget-latency.vue"),
         "confetti":     Vue.loadComponent("hud-widget-confetti.vue"),
-        "snowfall":     Vue.loadComponent("hud-widget-snowfall.vue")
     },
     created () {
         /*  interaction for minimization  */
@@ -487,6 +371,18 @@ export default {
             const a = this.$refs.agenda
             a.toggle()
         })
+        huds.bind("agenda.on", (event, data) => {
+            const a = this.$refs.agenda
+            a.on()
+        })
+        huds.bind("agenda.off", (event, data) => {
+            const a = this.$refs.agenda
+            a.off()
+        })
+        huds.bind("agenda.sound", (event, data) => {
+            const a = this.$refs.agenda
+            a.sound()
+        })
 
         /*  interaction for popup widget  */
         Mousetrap.bind("backspace", (e) => {
@@ -506,15 +402,6 @@ export default {
         huds.bind("popup.play", (event, data) => {
             const a = this.$refs.popup
             a.play()
-        })
-
-        /*  interaction for latency widget  */
-        Mousetrap.bind("!", (e) => {
-            huds.send("latency.toggle")
-        })
-        huds.bind("latency.toggle", (event, data) => {
-            const l = this.$refs.latency
-            l.toggle()
         })
 
         /*  interaction for progress widget  */
@@ -706,34 +593,6 @@ export default {
             p.attendance(data)
         })
 
-        /*  allow attendees widget to be interactively controlled  */
-        Mousetrap.bind("e", (e) => {
-            huds.send("attendees.toggle")
-        })
-        huds.bind("attendees.toggle", () => {
-            const a = this.$refs.attendees
-            a.toggle()
-        })
-
-        /*  receive messages from the feedback channel  */
-        huds.bind("feedback", (event, data) => {
-            /*  just react on correctly structured messages  */
-            if (!(   typeof data.client    === "string" && data.client  !== ""
-                  && typeof data.type      === "string" && data.type    !== ""))
-                return
-            const f = this.$refs.feedback
-            f.event(data)
-        })
-
-        /*  allow feeling widget to be interactively controlled  */
-        Mousetrap.bind("f", (e) => {
-            huds.send("feeling.toggle")
-        })
-        huds.bind("feeling.toggle", () => {
-            const f = this.$refs.feeling
-            f.toggle()
-        })
-
         /*  receive messages from the attendance channel  */
         huds.bind("feeling", (event, data) => {
             /*  just react on correctly structured messages  */
@@ -751,15 +610,6 @@ export default {
         huds.bind("confetti.raise", () => {
             const c = this.$refs.confetti
             c.raise()
-        })
-
-        /*  allow snowfall to be raised  */
-        Mousetrap.bind("s", (e) => {
-            huds.send("snowfall.toggle")
-        })
-        huds.bind("snowfall.toggle", () => {
-            const s = this.$refs.snowfall
-            s.toggle()
         })
 
         /*  control peers  */
