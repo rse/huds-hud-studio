@@ -41,6 +41,12 @@ attendance:
     iconcolor:             "#77aadd"
     textcolor:             "#e0f0ff"
 
+showviewcount:
+    opacity:               0.80
+    background:            "#336699"
+    iconcolor:             "#77aadd"
+    textcolor:             "#e0f0ff"
+
 closure:
     opacity:               0.75
     background1:           "#000000"
@@ -196,7 +202,7 @@ confetti:
     opacity:               1.00
 
 agenda:
-    opacity:               0.90
+    opacity:               0.80
     donecolorbg:           "#6699cc"
     donecolorfg:           "#f0f0ff"
     currcolorbg:           "#336699"
@@ -204,7 +210,7 @@ agenda:
     todocolorbg:           "#f0f0f0"
     todocolorfg:           "#999999"
     slots:
-        -   Lorem Ipsum 1
+        -   Lorem Ipsum 1 BKA BLA BKA
         -   Lorem Ipsum 2
         -   Lorem Ipsum 3
         -   Lorem Ipsum 4

@@ -44,6 +44,12 @@
             v-bind:iconcolor="config.attendance.iconcolor"
             v-bind:textcolor="config.attendance.textcolor"
         ></attendance>
+        <showviewcount ref="showviewcount" class="showviewcount"
+            v-bind:opacity="config.showviewcount.opacity"
+            v-bind:background="config.showviewcount.background"
+            v-bind:iconcolor="config.showviewcount.iconcolor"
+            v-bind:textcolor="config.showviewcount.textcolor"
+        ></showviewcount>
         <progress-bar ref="progressBar" class="progress"
             v-bind:opacity="config.progress.opacity"
             v-bind:donecolorbg="config.progress.donecolorbg"
@@ -185,16 +191,23 @@ body {
         height: 100vh;
     }
     > .attendance {
+        display: none;
         position: absolute;
         right: 10px;
         bottom: 10px;
         width: 180px;
     }
+    > .showviewcount {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 220px;
+    }
     > .title {
         position: absolute;
-        right: 170px;
+        right: 210px;
         bottom: 10px;
-        width: 540px;
+        width: 500px;
     }
     > .progress {
         position: absolute;
@@ -247,6 +260,9 @@ body {
         > .attendance {
             display: none;
         }
+        > .showviewcount {
+            display: none;
+        }
         > .title {
             display: none;
         }
@@ -288,18 +304,19 @@ export default {
         minimize: false
     }),
     components: {
-        "background":   Vue.loadComponent("hud-widget-background.vue"),
-        "banner":       Vue.loadComponent("hud-widget-banner.vue"),
-        "title-bar":    Vue.loadComponent("hud-widget-title.vue"),
-        "attendance":   Vue.loadComponent("hud-widget-attendance.vue"),
-        "progress-bar": Vue.loadComponent("hud-widget-progress.vue"),
-        "agenda":       Vue.loadComponent("hud-widget-agenda.vue"),
-        "logo":         Vue.loadComponent("hud-widget-logo.vue"),
-        "closure":      Vue.loadComponent("hud-widget-closure.vue"),
-        "popup":        Vue.loadComponent("hud-widget-popup.vue"),
-        "votes":        Vue.loadComponent("hud-widget-votes.vue"),
-        "timer":        Vue.loadComponent("hud-widget-timer.vue"),
-        "confetti":     Vue.loadComponent("hud-widget-confetti.vue"),
+        "background":    Vue.loadComponent("hud-widget-background.vue"),
+        "banner":        Vue.loadComponent("hud-widget-banner.vue"),
+        "title-bar":     Vue.loadComponent("hud-widget-title.vue"),
+        "attendance":    Vue.loadComponent("hud-widget-attendance.vue"),
+        "showviewcount": Vue.loadComponent("hud-widget-showviewcount.vue"),
+        "progress-bar":  Vue.loadComponent("hud-widget-progress.vue"),
+        "agenda":        Vue.loadComponent("hud-widget-agenda.vue"),
+        "logo":          Vue.loadComponent("hud-widget-logo.vue"),
+        "closure":       Vue.loadComponent("hud-widget-closure.vue"),
+        "popup":         Vue.loadComponent("hud-widget-popup.vue"),
+        "votes":         Vue.loadComponent("hud-widget-votes.vue"),
+        "timer":         Vue.loadComponent("hud-widget-timer.vue"),
+        "confetti":      Vue.loadComponent("hud-widget-confetti.vue"),
     },
     created () {
         /*  interaction for minimization  */
@@ -566,6 +583,21 @@ export default {
             }
         })
 
+        /*  allow showviewcount widget to be interactively controlled  */
+        Mousetrap.bind("V", (e) => {
+            huds.send("showviewcount.animate")
+        })
+        huds.bind("showviewcount.animate", () => {
+            const a = this.$refs.showviewcount
+            a.animate()
+        })
+        huds.bind("showviewcount.set", (event, data) => {
+            if (!(   typeof data.count  === "string" && data.count !== ""))
+                return
+            const a = this.$refs.showviewcount
+            a.set(data.count)
+        })
+
         /*  allow attendance widget to be interactively controlled  */
         Mousetrap.bind("A", (e) => {
             huds.send("attendance.animate")
@@ -579,7 +611,7 @@ export default {
         huds.bind("attendance", (event, data) => {
             /*  just react on correctly structured messages  */
             if (!(   typeof data.client  === "string" && data.client !== ""
-                  && typeof data.event   === "string" && data.event  !== ""))
+                  && typeof event        === "string" && event       !== ""))
                 return
             const a1 = this.$refs.attendance
             a1.attendance(data)
@@ -593,7 +625,7 @@ export default {
             p.attendance(data)
         })
 
-        /*  receive messages from the attendance channel  */
+        /*  receive messages from the feeling channel  */
         huds.bind("feeling", (event, data) => {
             /*  just react on correctly structured messages  */
             if (!(   typeof data.client    === "string" && data.client !== ""
