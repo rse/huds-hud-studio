@@ -158,6 +158,9 @@ export default {
             /*  receive particular agenda position (from progress bar)  */
             this.pos = pos
         },
+        sound () {
+            soundfx.play("click1")
+        },
         toggle () {
             /*  do nothing if we are still progressing  */
             if (this.progress)
@@ -200,6 +203,72 @@ export default {
                 if (newstate)
                     soundfx.play("click1")
                 this.enabled  = newstate
+                this.progress = false
+            })
+        },
+        on () {
+            /*  do nothing if we are still progressing  */
+            if (this.progress)
+                return
+
+            /*  determine old and new toggle state  */
+            if (this.enabled) 
+                return
+
+            this.progress = true
+
+            /*  create the on/off animation  */
+            const el = this.$refs.canvas
+            const tl = anime.timeline({
+                targets:  el,
+                duration: 1000,
+                autoplay: true
+            })
+          
+            /*  toggle agenda on  */
+            setTimeout(() => soundfx.play("whoosh3"), 200)
+            tl.add({
+                easing:     "cubicBezier(0.570, 0.000, 0.340, 1.390)",
+                translateX: [ -(30 + this.$el.clientWidth), 0 ],
+                opacity:    [ 1.0, 1.0 ]
+            })
+
+            tl.finished.then(() => {
+                soundfx.play("click1")
+                this.enabled  = true
+                this.progress = false
+            })
+        },
+        off () {
+            /*  do nothing if we are still progressing  */
+            if (this.progress)
+                return
+
+            /*  determine old and new toggle state  */
+            if (! this.enabled) 
+                return
+
+            this.progress = true
+
+            /*  create the on/off animation  */
+            const el = this.$refs.canvas
+            const tl = anime.timeline({
+                targets:  el,
+                duration: 1000,
+                autoplay: true
+            })
+          
+            /*  toggle agenda off  */
+            setTimeout(() => soundfx.play("click1"), 50)
+            setTimeout(() => soundfx.play("whoosh3"), 500)
+            tl.add({
+                easing:     "cubicBezier(0.625, -0.480, 0.505, 1.000)",
+                translateX: [ 0, -(30 + this.$el.clientWidth) ],
+                opacity:    [ 1.0, 1.0 ]
+            })
+
+            tl.finished.then(() => {
+                this.enabled  = false
                 this.progress = false
             })
         }
