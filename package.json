@@ -48,7 +48,7 @@
     },
     "scripts": {
         "huds":                            "huds",
-        "start":                           "huds -v3 -a 0.0.0.0 -p 9999 -d live-sender:.,studio.yaml -b wss://XXXX:XXXX@pad.huds.io/mqtt/ -n live-receiver -r stream/engelschall/sender -s stream/engelschall/receiver",
+        "start":                           "huds -v3 -a 0.0.0.0 -p 9999 -d live-sender:.,studio.yaml -b wss://XXXX:XXXX@pad.huds.io/mqtt/ -n live-receiver -r stream/sample/sender -s stream/sample/receiver",
         "lint":                            "eslint --config eslint.yaml --ext js,vue *.vue"
     }
 }
