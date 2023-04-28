@@ -84,8 +84,8 @@ export default {
     },
     methods: {
         /*  receive the showviewcount events  */
-        set (data) {
-            this.viewcount = data
+        set (text) {
+            this.viewcount = text
         },
 
         /*  allow the box to be animated  */

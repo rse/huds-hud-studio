@@ -31,7 +31,7 @@
             </div>
             <div class="body">
                 <span class="icon"><i v-bind:class="[ 'fas', 'fa-' + iconname ]"></i></span>
-                {{ titletext }}
+                {{ text }}
             </div>
             <div class="foot">
             </div>
@@ -84,19 +84,40 @@ export default {
     props: {
         opacity:    { type: Number, default: 1.0 },
         background: { type: String, default: "" },
-        iconname:   { type: String, default: "" },
-        iconcolor:  { type: String, default: "" },
         titletext:  { type: String, default: "" },
         titlecolor: { type: String, default: "" }
     },
     data: () => ({
         enabled:  false,
-        progress: false
+        progress: false,
+        text : ""
     }),
     computed: {
         style: HUDS.vueprop2cssvar()
     },
     methods: {
+        /*  set the text to be displayed in the insert */
+        set (data) {
+            this.text = data
+        },
+
+        /*  allow the box to be animated  */
+        /***
+        animate () {
+            const bar = this.$refs.bar
+            const tl = anime.timeline({
+                targets: bar,
+                duration: 400,
+                autoplay: true,
+                direction: "normal",
+                loop: 1,
+                easing: "easeInOutSine"
+            })
+            tl.add({ scaleX: 1.10, scaleY: 1.20, translateY: -3, translateX: -2 })
+                .add({ scaleX: 1.00, scaleY: 1.00, translateY: 0, translateX: 0 })
+        }
+        ***/
+
         /*  toggle insert on/off  */
         toggle () {
             /*  do nothing if we are still progressing  */

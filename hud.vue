@@ -28,15 +28,9 @@
     <div class="hud" v-bind:class="{ minimize: minimize }">
         <background v-if="debug" ref="background" class="background"
         ></background>
-        <insert
-            v-for="insert in config.insert.insert"
-            v-bind:key="insert.name"
-            v-bind:ref="'insert-' + insert.name"
-            class="insert"
+        <insert ref="insert" class="insert"
             v-bind:opacity="config.insert.opacity"
             v-bind:background="config.insert.background"
-            v-bind:iconname="insert.iconname"
-            v-bind:iconcolor="insert.iconcolor"
             v-bind:titletext="insert.titletext"
             v-bind:titlecolor="insert.titlecolor"
         ></insert>
@@ -345,7 +339,10 @@ export default {
         })
         ***/
         huds.bind("insert.toggle", (event, data) => {
-            const a = this.$refs[`insert-pause`]
+            const a = this.$refs.insert
+            if (!(   typeof data.text  === "string" && data.text !== ""))
+                return
+            a.set(data.text)
             a.toggle()
         })
 

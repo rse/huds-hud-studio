@@ -28,31 +28,8 @@ id:
 insert:
     opacity:               0.80
     background:            "#f0f0f0"
-    insert:
-        -   name:          pause
-            key:           p
-            iconname:      pause-circle
-            iconcolor:     "#336699"
-            titletext:     PAUSE
-            titlecolor:    "#000000"
-        -   name:          rant
-            key:           r
-            iconname:      radiation-alt
-            iconcolor:     "#bb0000"
-            titletext:     RANT
-            titlecolor:    "#000000"
-        -   name:          praise
-            key:           x
-            iconname:      award
-            iconcolor:     "#336699"
-            titletext:     PRAISE
-            titlecolor:    "#000000"
-        -   name:          qna
-            key:           q
-            iconname:      comments
-            iconcolor:     "#b06820"
-            titletext:     "Q&A"
-            titlecolor:    "#000000"
+    titletext:             PAUSE
+    titlecolor:            "#000000"
 
 title:
     opacity:               0.80
