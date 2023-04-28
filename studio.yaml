@@ -41,11 +41,38 @@ attendance:
     iconcolor:             "#77aadd"
     textcolor:             "#e0f0ff"
 
+attendees:
+    opacity:               0.80
+    background:            "#336699"
+    namecolorbg:           "#003366"
+    namecolorfg:           "#e0f0ff"
+    noattendeestext:       "This training has still no identified attendees."
+    privacylevel:          closed
+
 showviewcount:
     opacity:               0.80
     background:            "#336699"
     iconcolor:             "#77aadd"
     textcolor:             "#e0f0ff"
+
+feeling:
+    opacity:               0.80
+    background:            "#336699"
+    textcolor:             "#e0f0ff"
+    stdbarcolor:           "#d0e0f0"
+    maxbarcolor:           "#ffffff"
+    bordercolor:           "#99ccff"
+    legendcolor:           "#ffffff"
+    c1color:               "#b06820"
+    c2color:               "#909090"
+    c3color:               "#336699"
+    c4color:               "#909090"
+    c5color:               "#b06820"
+    m1color:               "#905810"
+    m2color:               "#b06820"
+    m3color:               "#909090"
+    m4color:               "#336699"
+    m5color:               "#225588"
 
 closure:
     opacity:               0.75
