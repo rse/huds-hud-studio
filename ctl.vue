@@ -26,18 +26,8 @@
 
 <template>
     <div class="ctl">
-        <popup ref="popup" class="popup"
-            v-bind:questionbackground="config.popup.questionbackground"
-            v-bind:questiontitlecolor="config.popup.questiontitlecolor"
-            v-bind:questionmessagecolor="config.popup.questionmessagecolor"
-            v-bind:objectionbackground="config.popup.objectionbackground"
-            v-bind:objectiontitlecolor="config.popup.objectiontitlecolor"
-            v-bind:objectionmessagecolor="config.popup.objectionmessagecolor"
-            v-bind:commentbackground="config.popup.commentbackground"
-            v-bind:commenttitlecolor="config.popup.commenttitlecolor"
-            v-bind:commentmessagecolor="config.popup.commentmessagecolor"
-            v-bind:privacylevel="config.popup.privacylevel"
-        ></popup>
+        <insert ref="insert" class="insert"
+        ></insert>
     </div>
 </template>
 
@@ -102,9 +92,17 @@ export default {
         debug:    typeof huds.options.debug === "boolean" ? huds.options.debug : false
     }),
     components: {
-        "popup":        Vue.loadComponent("ctl-widget-popup.vue")
+        "insert":       Vue.loadComponent("ctl-widget-insert.vue")
     },
     created () {
+        huds.bind("insert.toggle", (event, data) => {
+            const a = this.$refs.insert
+            if (!(   typeof data.text  === "string" && data.text !== ""))
+                return
+            a.set(data.text)
+            a.toggle()
+        })
+
         /*  receive messages for the attendance channel  */
         huds.bind("attendance", (event, data) => {
             /*  just react on correctly structured messages  */

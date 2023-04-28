@@ -338,7 +338,7 @@ export default {
             a.remove()
         })
         ***/
-        huds.bind("insert.toggle", (event, data) => {
+        huds.bind("insert", (event, data) => {
             const a = this.$refs.insert
             if (!(   typeof data.text  === "string" && data.text !== ""))
                 return
