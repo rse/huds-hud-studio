@@ -28,6 +28,18 @@
     <div class="hud" v-bind:class="{ minimize: minimize }">
         <background v-if="debug" ref="background" class="background"
         ></background>
+        <insert
+            v-for="insert in config.insert.insert"
+            v-bind:key="insert.name"
+            v-bind:ref="'insert-' + insert.name"
+            class="insert"
+            v-bind:opacity="config.insert.opacity"
+            v-bind:background="config.insert.background"
+            v-bind:iconname="insert.iconname"
+            v-bind:iconcolor="insert.iconcolor"
+            v-bind:titletext="insert.titletext"
+            v-bind:titlecolor="insert.titlecolor"
+        ></insert>
         <title-bar ref="titleBar" class="title"
             v-bind:opacity="config.title.opacity"
             v-bind:background="config.title.background"
@@ -297,6 +309,7 @@ body {
 export default {
     name: "hud",
     data: () => ({
+        insert:   false,
         config:   huds.config(),
         debug:    typeof huds.options.debug === "boolean" ? huds.options.debug : false,
         banner:   null,
@@ -305,6 +318,7 @@ export default {
     }),
     components: {
         "background":    Vue.loadComponent("hud-widget-background.vue"),
+        "insert":        Vue.loadComponent("hud-widget-insert.vue"),
         "banner":        Vue.loadComponent("hud-widget-banner.vue"),
         "title-bar":     Vue.loadComponent("hud-widget-title.vue"),
         "attendance":    Vue.loadComponent("hud-widget-attendance.vue"),
@@ -319,6 +333,22 @@ export default {
         "confetti":      Vue.loadComponent("hud-widget-confetti.vue"),
     },
     created () {
+        /*  interaction for insert widget  */
+        /***
+        huds.bind("insert.show", (event, data) => {
+            const a = this.$refs.insert
+            a.show(data)
+        })
+        huds.bind("insert.remove", (event, data) => {
+            const a = this.$refs.insert
+            a.remove()
+        })
+        ***/
+        huds.bind("insert.toggle", (event, data) => {
+            const a = this.$refs[`insert-pause`]
+            a.toggle()
+        })
+
         /*  interaction for minimization  */
         Mousetrap.bind("m", (e) => {
             huds.send("minimize.toggle")
