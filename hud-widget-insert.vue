@@ -27,10 +27,9 @@
 <template>
     <div v-show="enabled" ref="insert" v-bind:style="style" class="insert">
         <div ref="bar" class="bar">
-            <div class="head">
+         <div class="head">
             </div>
             <div class="body">
-                <span class="icon"><i v-bind:class="[ 'fas', 'fa-' + iconname ]"></i></span>
                 {{ text }}
             </div>
             <div class="foot">
@@ -64,10 +63,6 @@
             text-align: center;
             height: 240px;
             width: 1200px;
-            .icon {
-                color: var(--iconcolor);
-                padding-right: 10px;
-            }
         }
         .foot {
             background-color: var(--background);
