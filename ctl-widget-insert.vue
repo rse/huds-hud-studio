@@ -23,87 +23,106 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 -->
-
+<!---
 <template>
     <div>
         <input type="text" v-model="text"/>
         <button v-on:click="sendText">Send message</button>
     </div>
 </template>
+-->
+<template>
+  <div class="tabs-level-1">
+    <!--  ==== MONITOR ====  -->
+    <div class="header">Texteingabe</div>
+    <div class="desc">
+      Dieses <b>Textfeld</b> erlaubt es Texte als Overlay in den Stream zu
+      senden.
+    </div>
+    <div class="control">
+      <div class="label1">Text Input:</div>
+      <input class="text" v-model="text" />
+      <div class="button" v-on:click="sendText">Send</div>
+    </div>
+  </div>
+</template>
 
-<style lang="less" scoped>
-.insert {
-}
+<style>
+@import "./app.css";
 </style>
 
 <script>
 export default {
-    name: "title-bar",
-    props: {
-        questionbackground:    { type: String, default: "" },
-        questiontitlecolor:    { type: String, default: "" },
-        questionmessagecolor:  { type: String, default: "" },
-        objectionbackground:   { type: String, default: "" },
-        objectiontitlecolor:   { type: String, default: "" },
-        objectionmessagecolor: { type: String, default: "" },
-        commentbackground:     { type: String, default: "" },
-        commenttitlecolor:     { type: String, default: "" },
-        commentmessagecolor:   { type: String, default: "" },
-        privacylevel:          { type: String, default: "" }
+  name: "title-bar",
+  props: {
+    questionbackground: { type: String, default: "" },
+    questiontitlecolor: { type: String, default: "" },
+    questionmessagecolor: { type: String, default: "" },
+    objectionbackground: { type: String, default: "" },
+    objectiontitlecolor: { type: String, default: "" },
+    objectionmessagecolor: { type: String, default: "" },
+    commentbackground: { type: String, default: "" },
+    commenttitlecolor: { type: String, default: "" },
+    commentmessagecolor: { type: String, default: "" },
+    privacylevel: { type: String, default: "" },
+  },
+  data: () => ({
+    text: "",
+    queue: [],
+    popups: [],
+    attendees: {},
+    timer: null,
+  }),
+  computed: {
+    style: HUDS.vueprop2cssvar(),
+  },
+  setup() {
+    const boxes = Vue.ref([]);
+    Vue.onBeforeUpdate(() => {
+      boxes.value = [];
+    });
+    return { boxes };
+  },
+  methods: {
+    /*  add a insert */
+    async sendText(text) {
+      console.log(this);
+      console.log(">>>sendText " + text);
+      const data = { text: this.text };
+      console.log(">>>execute set");
+      huds.send("insert", data);
     },
-    data: () => ({
-        text:      "",
-        queue:     [],
-        popups:    [],
-        attendees: {},
-        timer:     null
-    }),
-    computed: {
-        style: HUDS.vueprop2cssvar()
+
+    tabChanged(tab) {
+      this.tab = tab.tab.name;
+      //window.location.hash = `#/control/${tab.tab.computedId}`
     },
-    setup () {
-        const boxes = Vue.ref([])
-        Vue.onBeforeUpdate(() => { boxes.value = [] })
-        return { boxes }
-    },
-    methods: {
-        /*  add a insert */
-        async sendText (text) {
-            console.log(this)
-            console.log(">>>sendText " + text)
-            const data = { text: this.text }
-            console.log(">>>execute set")
-            huds.send("insert",data)
-        },
-    },
-    created () {
-        /*  track the attendees (similar to "attendance" widget to be in sync)  */
-        this.timer = setInterval(() => {
-            /*  expire attendees not seen recently
+  },
+  created() {
+    /*  track the attendees (similar to "attendance" widget to be in sync)  */
+    this.timer = setInterval(() => {
+      /*  expire attendees not seen recently
                 (refresh usually every 10min, but we accept also up to 20min)  */
-            const now = (new Date()).getTime()
-            for (const client of Object.keys(this.attendees)) {
-                const seen = this.attendees[client].seen
-                if (seen + ((20 + 2) * 60 * 1000) < now)
-                    delete this.attendees[client]
-            }
-        }, 2 * 1000)
+      const now = new Date().getTime();
+      for (const client of Object.keys(this.attendees)) {
+        const seen = this.attendees[client].seen;
+        if (seen + (20 + 2) * 60 * 1000 < now) delete this.attendees[client];
+      }
+    }, 2 * 1000);
 
-        /*  queue worker loop  */
-        const progress = async () => {
-            while (this.queue.length > 0) {
-                const cmd = this.queue.shift()
-                try {
-                    await this[cmd.method](...cmd.args)
-                }
-                catch (err) {
-                    /*  no-op  */
-                }
-            }
-            this.timer = setTimeout(progress, 50)
+    /*  queue worker loop  */
+    const progress = async () => {
+      while (this.queue.length > 0) {
+        const cmd = this.queue.shift();
+        try {
+          await this[cmd.method](...cmd.args);
+        } catch (err) {
+          /*  no-op  */
         }
-        this.timer = setTimeout(progress, 50)
-    }
-}
+      }
+      this.timer = setTimeout(progress, 50);
+    };
+    this.timer = setTimeout(progress, 50);
+  },
+};
 </script>
-

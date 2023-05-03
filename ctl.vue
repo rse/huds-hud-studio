@@ -25,180 +25,154 @@
 -->
 
 <template>
-    <div class="ctl">
-        <insert ref="insert" class="insert"
-        ></insert>
+  <div class="app-control">
+    <!--  HEADER  -->
+    <div class="head">HUDS Studio Control</div>
+
+    <!--  BODY  -->
+    <div class="body">
+      <div class="ctl">
+        <insert ref="insert" class="row"></insert>
+        <insert ref="insert" class="row"></insert>
+      </div>
     </div>
+
+    <!--  FOOTER  -->
+    <div class="foot"></div>
+  </div>
 </template>
 
-<style lang="less" scoped>
-.ctl {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    font-family: sans-serif;
-    font-size: 12pt;
-    overflow: hidden;
-    background-color: #333333;
-    color: #ffffff;
-    > .attendance {
-        position: absolute;
-        right: 520px;
-        bottom: 20px;
-        width: 270px;
-    }
-    > .attendees {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        width:  calc(100vw - 830px);
-        height: calc(100vh - 40px);
-    }
-    > .feeling {
-        position: absolute;
-        right: 520px;
-        bottom: 100px;
-        width: 270px;
-    }
-    > .timer {
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        width: 470px;
-        height: 470px;
-    }
-    > .agenda {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        width: 760px;
-        height: calc(100vh - 530px);
-    }
-    > .popup {
-        position: absolute;
-        bottom: 40px;
-        width: calc(50vw);
-        height: calc(100vh - 80px);
-        left: 40px;
-    }
-}
+<style>
+@import "./app.css";
 </style>
 
 <script>
 export default {
-    name: "ctl",
-    data: () => ({
-        config:   huds.config(),
-        debug:    typeof huds.options.debug === "boolean" ? huds.options.debug : false
-    }),
-    components: {
-        "insert":       Vue.loadComponent("ctl-widget-insert.vue")
-    },
-    created () {
-        huds.bind("insert.toggle", (event, data) => {
-            const a = this.$refs.insert
-            if (!(   typeof data.text  === "string" && data.text !== ""))
-                return
-            a.set(data.text)
-            a.toggle()
-        })
+  name: "ctl",
+  data: () => ({
+    config: huds.config(),
+    debug: typeof huds.options.debug === "boolean" ? huds.options.debug : false,
+  }),
+  components: {
+    insert: Vue.loadComponent("ctl-widget-insert.vue"),
+  },
+  created() {
+    huds.bind("insert.toggle", (event, data) => {
+      const a = this.$refs.insert;
+      if (!(typeof data.text === "string" && data.text !== "")) return;
+      a.set(data.text);
+      a.toggle();
+    });
 
-        /*  receive messages for the attendance channel  */
-        huds.bind("attendance", (event, data) => {
-            /*  just react on correctly structured messages  */
-            if (!(   typeof data.client  === "string" && data.client !== ""
-                  && typeof data.event   === "string" && data.event  !== ""))
-                return
-            const a1 = this.$refs.attendance
-            a1.attendance(data)
-            const a2 = this.$refs.attendees
-            a2.attendance(data)
-            const f = this.$refs.feeling
-            f.attendance(data)
-            const p = this.$refs.popup
-            p.attendance(data)
-        })
+    /*  receive messages for the attendance channel  */
+    huds.bind("attendance", (event, data) => {
+      /*  just react on correctly structured messages  */
+      if (
+        !(
+          typeof data.client === "string" &&
+          data.client !== "" &&
+          typeof data.event === "string" &&
+          data.event !== ""
+        )
+      )
+        return;
+      const a1 = this.$refs.attendance;
+      a1.attendance(data);
+      const a2 = this.$refs.attendees;
+      a2.attendance(data);
+      const f = this.$refs.feeling;
+      f.attendance(data);
+      const p = this.$refs.popup;
+      p.attendance(data);
+    });
 
-        /*  receive messages for the attendance channel  */
-        huds.bind("feeling", (event, data) => {
-            /*  just react on correctly structured messages  */
-            if (!(   typeof data.client    === "string" && data.client !== ""
-                  && typeof data.challenge === "number" && typeof data.mood === "number"))
-                return
-            const f = this.$refs.feeling
-            f.event(data)
-        })
+    /*  receive messages for the attendance channel  */
+    huds.bind("feeling", (event, data) => {
+      /*  just react on correctly structured messages  */
+      if (
+        !(
+          typeof data.client === "string" &&
+          data.client !== "" &&
+          typeof data.challenge === "number" &&
+          typeof data.mood === "number"
+        )
+      )
+        return;
+      const f = this.$refs.feeling;
+      f.event(data);
+    });
 
-        /*  receive messages for the progress and agenda channel  */
-        huds.bind("progress.*", (event, data) => {
-            const t = this.$refs.timer
-            const a = this.$refs.agenda
-            if (event === "progress.prev") {
-                a.prev()
-                t.restart()
-            }
-            else if (event === "progress.next") {
-                a.next()
-                t.restart()
-            }
-        })
+    /*  receive messages for the progress and agenda channel  */
+    huds.bind("progress.*", (event, data) => {
+      const t = this.$refs.timer;
+      const a = this.$refs.agenda;
+      if (event === "progress.prev") {
+        a.prev();
+        t.restart();
+      } else if (event === "progress.next") {
+        a.next();
+        t.restart();
+      }
+    });
 
-        /*  receive messages for the popup channel  */
-        huds.bind("popup.add", (event, data) => {
-            const a = this.$refs.popup
-            a.add(data)
-        })
-        huds.bind("popup.remove", (event, data) => {
-            const a = this.$refs.popup
-            a.remove()
-        })
+    /*  receive messages for the popup channel  */
+    huds.bind("popup.add", (event, data) => {
+      const a = this.$refs.popup;
+      a.add(data);
+    });
+    huds.bind("popup.remove", (event, data) => {
+      const a = this.$refs.popup;
+      a.remove();
+    });
 
-        /*  receive messages for the voting channel  */
-        let votesEnabled = false
-        huds.bind("votes.*", (event, data) => {
-            if (event === "votes.toggle")
-                votesEnabled = !votesEnabled
-        })
+    /*  receive messages for the voting channel  */
+    let votesEnabled = false;
+    huds.bind("votes.*", (event, data) => {
+      if (event === "votes.toggle") votesEnabled = !votesEnabled;
+    });
 
-        /*  receive messages from a companion chat  */
-        huds.bind("message", (event, data) => {
-            /*  just react on correctly structured messages  */
-            if (!(   (typeof data.client === "string" && data.client !== "")
-                  && (typeof data.text === "string")))
-                return
+    /*  receive messages from a companion chat  */
+    huds.bind("message", (event, data) => {
+      /*  just react on correctly structured messages  */
+      if (
+        !(
+          typeof data.client === "string" &&
+          data.client !== "" &&
+          typeof data.text === "string"
+        )
+      )
+        return;
 
-            /*  filter message markup  */
-            data.text = data.text
-                .replace(/&nbsp;/g, " ")
-                .replace(/\s+/g, " ")
-                .replace(/^\s+/, "")
-                .replace(/\s+$/, "")
-            data.text = data.text.replace(/<([a-z][a-zA-Z0-9:-]*)(?:\s+="[^""]*")*\s*>(.*?)<\/\1>/g, (_, tag, body) => {
-                if (tag.match(/^(?:strong|em|u|s|b|i)$/))
-                    return `<${tag}>${body}</${tag}>`
-                else
-                    return body
-            })
+      /*  filter message markup  */
+      data.text = data.text
+        .replace(/&nbsp;/g, " ")
+        .replace(/\s+/g, " ")
+        .replace(/^\s+/, "")
+        .replace(/\s+$/, "");
+      data.text = data.text.replace(
+        /<([a-z][a-zA-Z0-9:-]*)(?:\s+="[^""]*")*\s*>(.*?)<\/\1>/g,
+        (_, tag, body) => {
+          if (tag.match(/^(?:strong|em|u|s|b|i)$/))
+            return `<${tag}>${body}</${tag}>`;
+          else return body;
+        }
+      );
 
-            /*  short-circuit voting messages  */
-            if (votesEnabled)
-                return
+      /*  short-circuit voting messages  */
+      if (votesEnabled) return;
 
-            /*  react on particular message types  */
-            if (data.text.match(/^(.+?)\?$/)) {
-                const a = this.$refs.popup
-                a.add({ ...data, type: "question" })
-            }
-            else if (data.text.match(/^(.+?)!$/)) {
-                const a = this.$refs.popup
-                a.add({ ...data, type: "objection" })
-            }
-            else {
-                const a = this.$refs.popup
-                a.add({ ...data, type: "comment" })
-            }
-        })
-    }
-}
+      /*  react on particular message types  */
+      if (data.text.match(/^(.+?)\?$/)) {
+        const a = this.$refs.popup;
+        a.add({ ...data, type: "question" });
+      } else if (data.text.match(/^(.+?)!$/)) {
+        const a = this.$refs.popup;
+        a.add({ ...data, type: "objection" });
+      } else {
+        const a = this.$refs.popup;
+        a.add({ ...data, type: "comment" });
+      }
+    });
+  },
+};
 </script>
-
