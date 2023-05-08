@@ -25,136 +25,165 @@
 -->
 
 <template>
-    <div v-show="enabled" ref="insert" v-bind:style="style" class="insert">
-        <div ref="bar" class="bar">
-         <div class="head">
+    <div v-show="enabled" ref="lowerthird" class="lowerthird"
+            v-bind:style="{ 'left' : config.insert.boxXpos + 'px',
+                            'top'  : config.insert.boxYpos + 'px',
+                            'width': config.insert.boxWidth + 'px',
+                            'display': visible
+                        }"
+    >
+        <div class="door" ref="door">
+            <div class="bar" ref="bar"
+                v-bind:style="{ 
+                                'background': 'linear-gradient(180deg,' + config.insert.barColor1 + ',' 
+                                                                                    + config.insert.barColor2 + ')',
+                                'height':     2 + config.insert.line1Height + config.insert.line2Height + 4 + 'px' 
+                              }"
+            ></div>
+        </div>
+        <div class="content">
+            <div class="line1" ref="line1"
+                v-bind:style="{ 'line-height': config.insert.line1Height + 'px',
+                                'color':       config.insert.line1Color1,
+                                'text-shadow': config.insert.line1Shadow1,
+                                'font-family': config.insert.line1FontFamily1,
+                                'font-size'  : 0.75 * config.insert.line1Height + 'px',
+                                'font-weight': config.insert.line1FontWeight1,
+                                'font-style':  config.insert.line1FontStyle1,
+                                'background':  config.insert.boxBackground,
+                                'width':       config.insert.boxWidth - 30 - 6 + 'px', 
+                              }"
+            >
+                <span class="text1">{{ text }}</span>
             </div>
-            <div class="body">
-                {{ text }}
-            </div>
-            <div class="foot">
+            <div class="line2" ref="line2"
+                v-bind:style="{ 'line-height': config.insert.line2Height + 'px',
+                                'color':       config.insert.line2Color1,
+                                'text-shadow': config.insert.line2Shadow1,
+                                'font-family': config.insert.line2FontFamily1,
+                                'font-size'  : 0.75 * config.insert.line2Height + 'px',
+                                'font-weight': config.insert.line2FontWeight1,
+                                'font-style':  config.insert.line2FontStyle1,
+                                'background':  config.insert.boxBackground,
+                                'width':       config.insert.boxWidth - 30 - 6 + 'px', 
+                                }"
+            >
+                <span class="text1">{{ text }}</span>
             </div>
         </div>
     </div>
 </template>
 
 <style lang="less" scoped>
-.insert {
-    opacity: var(--opacity);
-    .bar {
-        opacity: 0.0;
-        font-family: "TypoPRO Fira Sans";
-        font-weight: bold;
-        font-size: 100pt;
-        top: 550px;
-        left: -260px;
-        transform: rotate(-45deg);
-        transform-origin: top left;
-        position: absolute;
-        .head {
-            background-color: var(--background);
-            height: 10px;
-            margin-bottom: 10px;
-        }
-        .body {
-            padding-top: 80px;
-            background-color: var(--background);
-            color: var(--titlecolor);
-            text-align: center;
-            height: 240px;
-            width: 1200px;
-        }
-        .foot {
-            background-color: var(--background);
-            height: 10px;
-            margin-top: 10px;
-        }
-    }
-}
+@import "./lowerthird.css";
 </style>
 
 <script>
 export default {
     name: "insert",
     props: {
-        opacity:    { type: Number, default: 1.0 },
-        background: { type: String, default: "" },
-        titletext:  { type: String, default: "" },
-        titlecolor: { type: String, default: "" }
     },
     data: () => ({
-        enabled:  false,
-        progress: false,
-        text : ""
+        text : "",
+        config:   huds.config()
     }),
     computed: {
         style: HUDS.vueprop2cssvar()
     },
     methods: {
-        /*  set the text to be displayed in the insert */
+        /*  take the text, create the insert widget and visualize it through animation  */
         set (data) {
             this.text = data
+
+            const def = huds.config().insert
+
+            /*  grab the elements in the DOM fragment  */
+            const elBar   = this.$refs.bar
+            const elLine1 = this.$refs.line1
+            const elLine2 = this.$refs.line2
+
+            /* calculate width of text to assess the horizontal size of the textbox */
+            const textwidth = this.measureText(this.text, def.line1Height * 0.75, elLine1.style).width
+
+            /*  calculate start and end position for animation  */
+            const barStartPos  = 1 + 2 + def.line1Height + def.line2Height + 4
+            const barEndPos    = 0
+            const lineStartPos = -textwidth - 30      // honor padding
+            const lineEndPos   = 0
+
+            /*  set init position for animated elements  */
+            elBar.style.top    = barStartPos + "px"
+            elLine1.style.left = lineStartPos + "px"
+            elLine2.style.left = lineEndPos + "px"
+
+            /*  create animation timeline  */
+            const tl = anime.timeline({
+                autoplay:  true,
+                direction: "normal"
+            })
+
+            /*  coming: bar  */
+            tl.add({
+                targets:   elBar,
+                delay:     def.timeDelay,
+                duration:  def.timeAnimation1,
+                easing:    "easeOutSine",
+                top:       [ barStartPos, barEndPos ] 
+            })
+
+            /*  coming: line 1 and 2 */
+            tl.add({
+                targets:   [ elLine1, elLine2 ],
+                duration:  def.timeAnimation2,
+                endDelay:  def.timeDuration,
+                easing:    "easeOutSine",
+                left:      [ lineStartPos, lineEndPos ]
+            })
+
+            /*  going: line 1 and 2  */
+            tl.add({
+                targets:   [ elLine1, elLine2 ],
+                duration:  def.timeAnimation2,
+                easing:    "easeInSine",
+                left:      [ lineEndPos, lineStartPos ] 
+            })
+
+            /*  going: bar  */
+            tl.add({
+                targets:   elBar,
+                duration:  def.timeAnimation1,
+                easing:    "easeInSine",
+                top:       [ barEndPos, barStartPos ]
+            })
         },
+        
+        /* calculate the width and height of a text string based on font and font size */
+        /* (using Tofandel#s solution in https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript) */
+        measureText(pText, pFontSize, pStyle) {
+            var lDiv = document.createElement('div');
 
-        /*  allow the box to be animated  */
-        /***
-        animate () {
-            const bar = this.$refs.bar
-            const tl = anime.timeline({
-                targets: bar,
-                duration: 400,
-                autoplay: true,
-                direction: "normal",
-                loop: 1,
-                easing: "easeInOutSine"
-            })
-            tl.add({ scaleX: 1.10, scaleY: 1.20, translateY: -3, translateX: -2 })
-                .add({ scaleX: 1.00, scaleY: 1.00, translateY: 0, translateX: 0 })
-        }
-        ***/
+            document.body.appendChild(lDiv);
 
-        /*  toggle insert on/off  */
-        toggle () {
-            /*  do nothing if we are still progressing  */
-            if (this.progress)
-                return
-            this.progress = true
-
-            /*  determine old/new state  */
-            const el = this.$refs.bar
-            const oldstate = this.enabled
-            const newstate = !oldstate
-            if (!oldstate)
-                this.enabled = true
-
-            /*  animate the insert  */
-            const tl = anime.timeline({
-                targets:  el,
-                duration: 1000,
-                autoplay: true
-            })
-            if (newstate) {
-                /*  toggle insert on  */
-                tl.add({
-                    easing:     "easeOutBounce",
-                    translateX: [ -400, 0.0 ],
-                    rotate:     [ -45, -45 ],
-                    opacity:    [ 1.0, 1.0 ]
-                })
+            if (pStyle != null) {
+                lDiv.style = pStyle;
             }
-            else {
-                /*  toggle insert off  */
-                tl.add({
-                    easing:     "easeOutSine",
-                    opacity:    [ 1.0, 0.0 ]
-                })
-            }
-            tl.finished.then(() => {
-                this.enabled  = newstate
-                this.progress = false
-            })
+            lDiv.style.fontSize = "" + pFontSize + "px";
+            lDiv.style.position = "absolute";
+            lDiv.style.left = -1000;
+            lDiv.style.top = -1000;
+
+            lDiv.textContent = pText;
+
+            var lResult = {
+                width: lDiv.clientWidth,
+                height: lDiv.clientHeight
+            };
+
+            document.body.removeChild(lDiv);
+            lDiv = null;
+
+            return lResult;
         }
     }
 }
 </script>
-

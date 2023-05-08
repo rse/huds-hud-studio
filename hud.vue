@@ -94,7 +94,6 @@ export default {
             if (!(   typeof data.text  === "string" && data.text !== ""))
                 return
             a.set(data.text)
-            a.toggle()
         })
 
         /*  interaction for minimization  */
