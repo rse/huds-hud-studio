@@ -103,15 +103,13 @@ export default {
   },
   methods: {
     /*  add a insert */
-    async sendText(line1, line2) {
-      console.log(this);
-
-      var txt;
-      if (line1.length > 0 && line2.length == 0) txt = line1;
-      else if (line1.length == 0 && line2.length > 0) txt = line2;
-      else if (line1.length > 0 && line2.length > 0) txt = line1 + "\n" + line2;
-      else return;
-
+    async sendText(line1 = "",line2 = "") {
+      let txt;
+      if      (line1.length > 0  &&  line2.length == 0)  txt = line1;        
+      else if (line1.length == 0  &&  line2.length > 0)  txt = line2;        
+      else if (line1.length > 0  &&  line2.length > 0)   txt = line1 + "\n" + line2;
+      else                                               return;
+      
       const data = { text: txt };
       huds.send("insert", data);
     },
@@ -128,32 +126,6 @@ export default {
       this.tab = tab.tab.name;
       //window.location.hash = `#/control/${tab.tab.computedId}`
     },
-  },
-  created() {
-    /*  track the attendees (similar to "attendance" widget to be in sync)  */
-    this.timer = setInterval(() => {
-      /*  expire attendees not seen recently
-                (refresh usually every 10min, but we accept also up to 20min)  */
-      const now = new Date().getTime();
-      for (const client of Object.keys(this.attendees)) {
-        const seen = this.attendees[client].seen;
-        if (seen + (20 + 2) * 60 * 1000 < now) delete this.attendees[client];
-      }
-    }, 2 * 1000);
-
-    /*  queue worker loop  */
-    const progress = async () => {
-      while (this.queue.length > 0) {
-        const cmd = this.queue.shift();
-        try {
-          await this[cmd.method](...cmd.args);
-        } catch (err) {
-          /*  no-op  */
-        }
-      }
-      this.timer = setTimeout(progress, 50);
-    };
-    this.timer = setTimeout(progress, 50);
   },
 };
 </script>
