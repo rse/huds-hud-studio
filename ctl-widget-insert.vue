@@ -44,20 +44,20 @@
       <input
         class="text"
         v-model="line1"
-        maxlength="360"
+        maxlength="320"
         @input="countCharsLine1(line1)"
       />
-      <p>({{ line1Length }}/360)</p>
+      <p>({{ line1Length }}/320)</p>
     </div>
     <div class="control">
       <div class="label1">Text Zeile 2:</div>
       <input
         class="text"
         v-model="line2"
-        maxlength="180"
+        maxlength="160"
         @input="countCharsLine2(line2)"
       />
-      <p>({{ line2Length }}/180)</p>
+      <p>({{ line2Length }}/160)</p>
       <div class="button" v-on:click="sendText(line1, line2)">Send</div>
     </div>
   </div>
