@@ -37,25 +37,25 @@
                 v-bind:style="{ 
                                 'background': 'linear-gradient(180deg,' + config.insert.barColor1 + ',' 
                                                                         + config.insert.barColor2 + ')',
-                                'height':     2 + config.insert.lineHeight + 4 + 'px' 
+                                'height':     2 + config.insert.boxHeight + 4 + 'px' 
                               }"
             ></div>
         </div>
         <div class="content">
             <div class="line" ref="line"
-                v-bind:style="{ 'height': config.insert.lineHeight + 'px',
-                                'color':       config.insert.lineColor,
-                                'text-shadow': config.insert.lineShadow,
-                                'font-family': config.insert.lineFontFamily,
-                                'font-size'  : 0.375 * config.insert.lineHeight + 'px', // want to have two lines
-                                'font-weight': config.insert.lineFontWeight,
-                                'font-style':  config.insert.lineFontStyle,
-                                'background':  config.insert.boxBackground,
-                                'width':       config.insert.boxWidth - 30 - 6 + 'px', 
-                                'margin-right': 100 + 'px'
+                v-bind:style="{ 'height':       config.insert.boxHeight + 'px',
+                                'color':        config.insert.lineColor,
+                                'text-shadow':  config.insert.lineShadow,
+                                'font-family':  config.insert.lineFontFamily,
+                                'font-size'  :  0.375 * config.insert.boxHeight + 'px', // want to have two lines
+                                'font-weight':  config.insert.lineFontWeight,
+                                'font-style':   config.insert.lineFontStyle,
+                                'background':   config.insert.boxBackground,
+                                'width':        config.insert.boxWidth - config.insert.linePadding - config.insert.barWidth + 'px', 
+                                'margin-right': config.insert.boxXpos + 'px'
                               }"
             >
-                <span class="text">{{ text }}</span>
+                <span class="text" ref="text">{{ text }}</span>
             </div>
         </div>
     </div>
@@ -89,14 +89,25 @@ export default {
             const elBar  = this.$refs.bar
             const elLine = this.$refs.line
 
-            /* calculate width of text to assess the horizontal size of the textbox */
-            const textwidth = this.measureText(this.text, def.lineHeight * 0.375, elLine.style).width
+            /* calculate maximum possible and actual width of text */
+            const maxTextWidth = def.canvasWidth - 2 * def.boxXpos - 2 * def.linePadding - def.barWidth
+            const actTextWidth = this.measureText(def.boxHeight * 0.375, elLine.style).width
+            const textWidth    = (actTextWidth <= maxTextWidth)  ?  actTextWidth  :  maxTextWidth
+            console.log("INSERT: text width = " + actTextWidth)
 
             /*  calculate start and end position for animation  */
-            const barStartPos  = 1 + 2 + def.lineHeight + 4
+            const barStartPos  = 1 + 2 + def.boxHeight + 4
             const barEndPos    = 0
-            const lineStartPos = -textwidth - 30 - 6      // honor padding
+            const lineStartPos = - textWidth - 2 * def.linePadding
             const lineEndPos   = 0
+
+            /*  set proper vertical alignment for one and two line text */
+            if (this.text.indexOf("\n") >= 0  ||  actTextWidth > maxTextWidth) {
+              elLine.style.lineHeight = def.boxHeight / 2 - 2 + "px";
+            }
+            else {
+              elLine.style.lineHeight = def.boxHeight - 2 + "px";
+            }
 
             /*  set init position for animated elements  */
             elBar.style.top   = barStartPos + "px"
@@ -144,31 +155,30 @@ export default {
         },
         
         /* calculate the width and height of a text string based on font and font size */
-        /* (using Tofandel#s solution in https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript) */
-        measureText(pText, pFontSize, pStyle) {
-            var lDiv = document.createElement('div');
+        /* (using Tofandel's solution in https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript) */
+        measureText(pFontSize, pStyle) {
+            var lDiv = document.createElement('div')
 
-            document.body.appendChild(lDiv);
+            document.body.appendChild(lDiv)
 
-            if (pStyle != null) {
-                lDiv.style = pStyle;
-            }
-            lDiv.style.fontSize = "" + pFontSize + "px";
-            lDiv.style.position = "absolute";
-            lDiv.style.left = -1000;
-            lDiv.style.top = -1000;
+            if (pStyle !== undefined)  lDiv.style = pStyle;
 
-            lDiv.textContent = pText;
+            lDiv.style.fontSize = "" + pFontSize + "px"
+            lDiv.style.position = "absolute"
+            lDiv.style.left = -1000
+            lDiv.style.top = -1000
+
+            lDiv.textContent = this.text
 
             var lResult = {
                 width: lDiv.clientWidth,
                 height: lDiv.clientHeight
-            };
+            }
 
-            document.body.removeChild(lDiv);
-            lDiv = null;
+            document.body.removeChild(lDiv)
+            lDiv = null
 
-            return lResult;
+            return lResult
         }
     }
 }

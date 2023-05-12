@@ -44,20 +44,20 @@
       <input
         class="text"
         v-model="line1"
-        maxlength="160"
+        maxlength="360"
         @input="countCharsLine1(line1)"
       />
-      <p>({{ line1Length }}/160)</p>
+      <p>({{ line1Length }}/360)</p>
     </div>
     <div class="control">
       <div class="label1">Text Zeile 2:</div>
       <input
         class="text"
         v-model="line2"
-        maxlength="160"
+        maxlength="180"
         @input="countCharsLine2(line2)"
       />
-      <p>({{ line2Length }}/160)</p>
+      <p>({{ line2Length }}/180)</p>
       <div class="button" v-on:click="sendText(line1, line2)">Send</div>
     </div>
   </div>
@@ -102,15 +102,17 @@ export default {
     return { boxes };
   },
   methods: {
-    /*  add a insert */
-    async sendText(line1 = "",line2 = "") {
+    /*  add an insert */
+    async sendText(line1, line2) {
+      /* make one string from the two line input */
       let txt;
-      if      (line1.length > 0  &&  line2.length == 0)  txt = line1;        
-      else if (line1.length == 0  &&  line2.length > 0)  txt = line2;        
-      else if (line1.length > 0  &&  line2.length > 0)   txt = line1 + "\n" + line2;
-      else                                               return;
-      
+      if      (this.line1Length > 0   &&  this.line2Length == 0)  txt = line1;        
+      else if (this.line1Length == 0  &&  this.line2Length > 0)   txt = line2;        
+      else if (this.line1Length > 0   &&  this.line2Length > 0)   txt = line1 + "\n" + line2;
+      else                                                        return;
       const data = { text: txt };
+
+      /* send string to subscribers */
       huds.send("insert", data);
     },
 
@@ -120,11 +122,6 @@ export default {
 
     async countCharsLine2(line2) {
       this.line2Length = line2.length;
-    },
-
-    tabChanged(tab) {
-      this.tab = tab.tab.name;
-      //window.location.hash = `#/control/${tab.tab.computedId}`
     },
   },
 };
