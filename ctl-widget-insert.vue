@@ -41,12 +41,24 @@
     </div>
     <div class="control">
       <div class="label1">Text Zeile 1:</div>
-      <input class="text" v-model="line1" maxlength="160"/>
+      <input
+        class="text"
+        v-model="line1"
+        maxlength="160"
+        @input="countCharsLine1(line1)"
+      />
+      <p>({{ line1Length }}/160)</p>
     </div>
     <div class="control">
       <div class="label1">Text Zeile 2:</div>
-      <input class="text" v-model="line2" maxlength="160"/>
-      <div class="button" v-on:click="sendText(line1,line2)">Send</div>
+      <input
+        class="text"
+        v-model="line2"
+        maxlength="160"
+        @input="countCharsLine2(line2)"
+      />
+      <p>({{ line2Length }}/160)</p>
+      <div class="button" v-on:click="sendText(line1, line2)">Send</div>
     </div>
   </div>
 </template>
@@ -72,6 +84,8 @@ export default {
   },
   data: () => ({
     text: "",
+    line1Length: 0,
+    line2Length: 0,
     queue: [],
     popups: [],
     attendees: {},
@@ -89,17 +103,25 @@ export default {
   },
   methods: {
     /*  add a insert */
-    async sendText(line1,line2) {
+    async sendText(line1, line2) {
       console.log(this);
 
       var txt;
-      if      (line1.length > 0  &&  line2.length == 0)  txt = line1;        
-      else if (line1.length == 0  &&  line2.length > 0)  txt = line2;        
-      else if (line1.length > 0  &&  line2.length > 0)   txt = line1 + "\n" + line2;
-      else                                               return;
-      
+      if (line1.length > 0 && line2.length == 0) txt = line1;
+      else if (line1.length == 0 && line2.length > 0) txt = line2;
+      else if (line1.length > 0 && line2.length > 0) txt = line1 + "\n" + line2;
+      else return;
+
       const data = { text: txt };
       huds.send("insert", data);
+    },
+
+    async countCharsLine1(line1) {
+      this.line1Length = line1.length;
+    },
+
+    async countCharsLine2(line2) {
+      this.line2Length = line2.length;
     },
 
     tabChanged(tab) {
