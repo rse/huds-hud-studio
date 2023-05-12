@@ -36,13 +36,17 @@
     <!--  ==== MONITOR ====  -->
     <div class="header">Texteingabe</div>
     <div class="desc">
-      Dieses <b>Textfeld</b> erlaubt es Texte als Overlay in den Stream zu
+      Dieses <b>Textfeld</b> erlaubt es, Texte als Overlay in den Stream zu
       senden.
     </div>
     <div class="control">
-      <div class="label1">Text Input:</div>
-      <input class="text" v-model="text" />
-      <div class="button" v-on:click="sendText">Send</div>
+      <div class="label1">Text Zeile 1:</div>
+      <input class="text" v-model="line1" maxlength="160"/>
+    </div>
+    <div class="control">
+      <div class="label1">Text Zeile 2:</div>
+      <input class="text" v-model="line2" maxlength="160"/>
+      <div class="button" v-on:click="sendText(line1,line2)">Send</div>
     </div>
   </div>
 </template>
@@ -85,11 +89,16 @@ export default {
   },
   methods: {
     /*  add a insert */
-    async sendText(text) {
+    async sendText(line1,line2) {
       console.log(this);
-      console.log(">>>sendText " + text);
-      const data = { text: this.text };
-      console.log(">>>execute set");
+
+      var txt;
+      if      (line1.length > 0  &&  line2.length == 0)  txt = line1;        
+      else if (line1.length == 0  &&  line2.length > 0)  txt = line2;        
+      else if (line1.length > 0  &&  line2.length > 0)   txt = line1 + "\n" + line2;
+      else                                               return;
+      
+      const data = { text: txt };
       huds.send("insert", data);
     },
 

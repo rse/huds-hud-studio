@@ -33,7 +33,6 @@
     <div class="body">
       <div class="ctl">
         <insert ref="insert" class="row"></insert>
-        <insert ref="insert" class="row"></insert>
       </div>
     </div>
 

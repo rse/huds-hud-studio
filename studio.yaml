@@ -37,26 +37,17 @@ insert:
     barColor1:             "#b34745"                 # accent bar color 1 (at top, for linear gradient)
     barColor2:             "#932737"                 # accent bar color 2 (at bottom, for linear gradient)
 
-    line1Height:           30                        # height (in pixels) of line 1
+    lineHeight:            60                        # height (in pixels) of line 1
 
-    line1Text1:            ""                        # text               of line 1, text 1 (left)
-    line1Color1:           "#606060"                 # text color         of line 1, text 1 (left)
-    line1Shadow1:          transparent               # text shadow        of line 1, text 1 (left)
-    line1FontFamily1:      "TypoPRO Source Sans Pro" # text font family   of line 1, text 1 (left)
-    line1FontWeight1:      "300"                     # text font weight   of line 1, text 1 (left)
-    line1FontStyle1:       "normal"                  # text font style    of line 1, text 1 (left)
-
-    line2Height:           30                        # height (in pixels) of line 2
-
-    line2Text1:            ""                        # text               of line 2, text 1 (left)
-    line2Color1:           "#606060"                 # text color         of line 2, text 1 (left)
-    line2Shadow1:          transparent               # text shadow        of line 2, text 1 (left)
-    line2FontFamily1:      "TypoPRO Source Sans Pro" # text font family   of line 2, text 1 (left)
-    line2FontWeight1:      "300"                     # text font weight   of line 2, text 1 (left)
-    line2FontStyle1:       "normal"                  # text font style    of line 2, text 1 (left)
+    lineText:              ""                        # text               of line (left)
+    lineColor:             "#606060"                 # text color         of line (left)
+    lineShadow:            transparent               # text shadow        of line (left)
+    lineFontFamily:        "TypoPRO Source Sans Pro" # text font family   of line (left)
+    lineFontWeight:        "300"                     # text font weight   of line (left)
+    lineFontStyle:         "normal"                  # text font style    of line (left)
 
     timeDelay:             1000                      # time (in ms) for initially waiting (before coming)
     timeAnimation1:        250                       # time (in ms) of bar  animation     (coming and going)
     timeAnimation2:        1500                      # time (in ms) of line animation     (coming and going)
-    timeDuration:          8000                      # time (in ms) for keeping           (before going)
+    timeDuration:          800                      # time (in ms) for keeping           (before going)
 

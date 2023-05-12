@@ -36,39 +36,26 @@
             <div class="bar" ref="bar"
                 v-bind:style="{ 
                                 'background': 'linear-gradient(180deg,' + config.insert.barColor1 + ',' 
-                                                                                    + config.insert.barColor2 + ')',
-                                'height':     2 + config.insert.line1Height + config.insert.line2Height + 4 + 'px' 
+                                                                        + config.insert.barColor2 + ')',
+                                'height':     2 + config.insert.lineHeight + 4 + 'px' 
                               }"
             ></div>
         </div>
         <div class="content">
-            <div class="line1" ref="line1"
-                v-bind:style="{ 'line-height': config.insert.line1Height + 'px',
-                                'color':       config.insert.line1Color1,
-                                'text-shadow': config.insert.line1Shadow1,
-                                'font-family': config.insert.line1FontFamily1,
-                                'font-size'  : 0.75 * config.insert.line1Height + 'px',
-                                'font-weight': config.insert.line1FontWeight1,
-                                'font-style':  config.insert.line1FontStyle1,
+            <div class="line" ref="line"
+                v-bind:style="{ 'height': config.insert.lineHeight + 'px',
+                                'color':       config.insert.lineColor,
+                                'text-shadow': config.insert.lineShadow,
+                                'font-family': config.insert.lineFontFamily,
+                                'font-size'  : 0.375 * config.insert.lineHeight + 'px', // want to have two lines
+                                'font-weight': config.insert.lineFontWeight,
+                                'font-style':  config.insert.lineFontStyle,
                                 'background':  config.insert.boxBackground,
                                 'width':       config.insert.boxWidth - 30 - 6 + 'px', 
+                                'margin-right': 100 + 'px'
                               }"
             >
-                <span class="text1">{{ text }}</span>
-            </div>
-            <div class="line2" ref="line2"
-                v-bind:style="{ 'line-height': config.insert.line2Height + 'px',
-                                'color':       config.insert.line2Color1,
-                                'text-shadow': config.insert.line2Shadow1,
-                                'font-family': config.insert.line2FontFamily1,
-                                'font-size'  : 0.75 * config.insert.line2Height + 'px',
-                                'font-weight': config.insert.line2FontWeight1,
-                                'font-style':  config.insert.line2FontStyle1,
-                                'background':  config.insert.boxBackground,
-                                'width':       config.insert.boxWidth - 30 - 6 + 'px', 
-                                }"
-            >
-                <span class="text1">{{ text }}</span>
+                <span class="text">{{ text }}</span>
             </div>
         </div>
     </div>
@@ -94,27 +81,26 @@ export default {
         /*  take the text, create the insert widget and visualize it through animation  */
         set (data) {
             this.text = data
+            //this.text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna"
 
             const def = huds.config().insert
 
             /*  grab the elements in the DOM fragment  */
-            const elBar   = this.$refs.bar
-            const elLine1 = this.$refs.line1
-            const elLine2 = this.$refs.line2
+            const elBar  = this.$refs.bar
+            const elLine = this.$refs.line
 
             /* calculate width of text to assess the horizontal size of the textbox */
-            const textwidth = this.measureText(this.text, def.line1Height * 0.75, elLine1.style).width
+            const textwidth = this.measureText(this.text, def.lineHeight * 0.375, elLine.style).width
 
             /*  calculate start and end position for animation  */
-            const barStartPos  = 1 + 2 + def.line1Height + def.line2Height + 4
+            const barStartPos  = 1 + 2 + def.lineHeight + 4
             const barEndPos    = 0
-            const lineStartPos = -textwidth - 30      // honor padding
+            const lineStartPos = -textwidth - 30 - 6      // honor padding
             const lineEndPos   = 0
 
             /*  set init position for animated elements  */
-            elBar.style.top    = barStartPos + "px"
-            elLine1.style.left = lineStartPos + "px"
-            elLine2.style.left = lineEndPos + "px"
+            elBar.style.top   = barStartPos + "px"
+            elLine.style.left = lineStartPos + "px"
 
             /*  create animation timeline  */
             const tl = anime.timeline({
@@ -131,18 +117,18 @@ export default {
                 top:       [ barStartPos, barEndPos ] 
             })
 
-            /*  coming: line 1 and 2 */
+            /*  coming: line 1 */
             tl.add({
-                targets:   [ elLine1, elLine2 ],
+                targets:   elLine,
                 duration:  def.timeAnimation2,
                 endDelay:  def.timeDuration,
                 easing:    "easeOutSine",
                 left:      [ lineStartPos, lineEndPos ]
             })
 
-            /*  going: line 1 and 2  */
+            /*  going: line 1 */
             tl.add({
-                targets:   [ elLine1, elLine2 ],
+                targets:   elLine,
                 duration:  def.timeAnimation2,
                 easing:    "easeInSine",
                 left:      [ lineEndPos, lineStartPos ] 

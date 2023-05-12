@@ -62,21 +62,15 @@ body {
     overflow: hidden;
     position: relative;
 }
-.lowerthird .content .line1 {
+
+.lowerthird .content .line {
     position: relative;
-    padding-left:  15px;
+    padding-left: 15px;
     padding-right: 15px;
-    padding-top:   2px;
-    text-align:    left;
-}
-.lowerthird .content .line1 .firstname {
-}
-.lowerthird .content .line1 .surname {
-}
-.lowerthird .content .line2 {
-    position: relative;
-    padding-left:  15px;
-    padding-right: 15px;
-    padding-bottom: 4px;
-    text-align:    left;
-}
+    padding-top: 2px;
+    text-align: left;
+ }
+
+.lowerthird .content .line .text {
+    white-space: pre-line;
+ }

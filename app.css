@@ -299,6 +299,7 @@ html {
   justify-items: start;
   align-items: center;
   gap: 10px 10px;
+  padding-bottom: 10px;
 }
 .app-control .control .label1,
 .app-control .control .label2,
@@ -373,7 +374,7 @@ html {
   outline: none;
   font-weight: bold;
   font-size: 12pt;
-  width: calc(400px - 2 * 12px);
+  width: calc(800px - 2 * 12px);
 }
 .app-control .control input.text:focus {
   background-color: var(--color-acc-bg-4);
