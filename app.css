@@ -45,7 +45,7 @@ html {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: var(--color-std-bg-1);
+  background-color: transparent;
   color: var(--color-std-fg-3);
   font-family: "TypoPRO Source Sans Pro", sans-serif;
   font-size: 12pt;
