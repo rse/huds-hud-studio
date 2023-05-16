@@ -123,7 +123,9 @@ export default {
           txt = this.line2;
         else if (this.line1.length > 0 && this.line2.length > 0)
           txt = this.line1 + "\n" + this.line2;
-        else return;
+        else {
+          this.buttonDisabeld = false
+          return;}
         const data = { text: txt };
 
         huds.send("insert", data);
