@@ -29,8 +29,8 @@
     v-if="logoVisible"
     v-bind:style="{
         width: config.insert.logoWidth + 'px',
-        top: config.insert.logoYpos + 'px',
-        right: config.insert.logoXpos + 'px'
+        top:   config.insert.logoYpos  + 'px',
+        right: config.insert.logoXpos  + 'px'
         }"
     :src = "config.insert.logoPath"
     alt="msg Logo"/>
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-    name: "logo",
+    name:  "logo",
     props: {},
     data: () => ({
     logoVisible: true,

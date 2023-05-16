@@ -26,7 +26,6 @@
 
 <template>
   <div class="tabs-level-1">
-    <!--  ==== MONITOR ====  -->
     <div class="header">Texteingabe</div>
     <div class="desc">
       Dieses <b>Textfeld</b> erlaubt es, Texte als Overlay in den Stream zu
@@ -72,21 +71,21 @@
 export default {
   name: "title-bar",
   props: {
-    questionbackground: { type: String, default: "" },
-    questiontitlecolor: { type: String, default: "" },
-    questionmessagecolor: { type: String, default: "" },
-    objectionbackground: { type: String, default: "" },
-    objectiontitlecolor: { type: String, default: "" },
+    questionbackground:    { type: String, default: "" },
+    questiontitlecolor:    { type: String, default: "" },
+    questionmessagecolor:  { type: String, default: "" },
+    objectionbackground:   { type: String, default: "" },
+    objectiontitlecolor:   { type: String, default: "" },
     objectionmessagecolor: { type: String, default: "" },
-    commentbackground: { type: String, default: "" },
-    commenttitlecolor: { type: String, default: "" },
-    commentmessagecolor: { type: String, default: "" },
-    privacylevel: { type: String, default: "" },
+    commentbackground:     { type: String, default: "" },
+    commenttitlecolor:     { type: String, default: "" },
+    commentmessagecolor:   { type: String, default: "" },
+    privacylevel:          { type: String, default: "" },
   },
   data: () => ({
-    text: "",
-    line1: "",
-    line2: "",
+    text:           "",
+    line1:          "",
+    line2:          "",
     line1MaxLength: huds.config().insert.line1MaxLength,
     line2MaxLenght: huds.config().insert.line2MaxLength,
     buttonDisabeld: false,
@@ -96,10 +95,10 @@ export default {
       huds.config().insert.timeAnimation2 * 2 +
       huds.config().insert.timeDuration +
       huds.config().insert.timePause,
-    queue: [],
-    popups: [],
-    attendees: {},
-    timer: null,
+    queue:          [],
+    popups:         [],
+    attendees:      {},
+    timer:          null
   }),
   computed: {
     style: HUDS.vueprop2cssvar(),

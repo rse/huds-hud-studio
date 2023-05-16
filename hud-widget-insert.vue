@@ -102,7 +102,6 @@ export default {
     /*  take the text, create the insert widget and visualize it through animation  */
     set(data) {
       this.text = data;
-      //this.text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna"
 
       const def = huds.config().insert;
 
@@ -119,7 +118,6 @@ export default {
       ).width;
       const textWidth =
         actTextWidth <= maxTextWidth ? actTextWidth : maxTextWidth;
-      console.log("INSERT: text width = " + actTextWidth);
 
       /*  calculate start and end position for animation  */
       const barStartPos = 1 + 2 + def.boxHeight + 4;

@@ -82,16 +82,6 @@ export default {
     },
     created () {
         /*  interaction for insert widget  */
-        /***
-        huds.bind("insert.show", (event, data) => {
-            const a = this.$refs.insert
-            a.show(data)
-        })
-        huds.bind("insert.remove", (event, data) => {
-            const a = this.$refs.insert
-            a.remove()
-        })
-        ***/
         huds.bind("insert", (event, data) => {
             const a = this.$refs.insert
             if (!(   typeof data.text  === "string" && data.text !== ""))

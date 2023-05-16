@@ -26,7 +26,6 @@
 
 <template>
   <div class="tabs-level-1">
-    <!--  ==== MONITOR ====  -->
     <div class="header">Logo</div>
     <div class="desc">
       Logo ein- oder ausblenden.
@@ -49,16 +48,16 @@
 export default {
   name: "title-bar",
   props: {
-    questionbackground: { type: String, default: "" },
-    questiontitlecolor: { type: String, default: "" },
-    questionmessagecolor: { type: String, default: "" },
-    objectionbackground: { type: String, default: "" },
-    objectiontitlecolor: { type: String, default: "" },
+    questionbackground:    { type: String, default: "" },
+    questiontitlecolor:    { type: String, default: "" },
+    questionmessagecolor:  { type: String, default: "" },
+    objectionbackground:   { type: String, default: "" },
+    objectiontitlecolor:   { type: String, default: "" },
     objectionmessagecolor: { type: String, default: "" },
-    commentbackground: { type: String, default: "" },
-    commenttitlecolor: { type: String, default: "" },
-    commentmessagecolor: { type: String, default: "" },
-    privacylevel: { type: String, default: "" },
+    commentbackground:     { type: String, default: "" },
+    commenttitlecolor:     { type: String, default: "" },
+    commentmessagecolor:   { type: String, default: "" },
+    privacylevel:          { type: String, default: "" },
   },
   data: () => ({
     logoVisible: true,
@@ -77,7 +76,6 @@ export default {
     /*  add an insert */
     async toggleLogo() {
       /* make one string from the two line input */
-      console.log(!this.logoVisible)
       huds.send("logo", !this.logoVisible);
     },
   },
