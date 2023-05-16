@@ -132,10 +132,10 @@ export default {
         const data = { text: txt };
 
         huds.send("insert", data);
-        this.line1 = "";
-        this.line2 = "";
-        this.line1Length = 0;
-        this.line2Length = 0;
+        //this.line1 = "";
+        //this.line2 = "";
+        //this.line1Length = 0;
+        //this.line2Length = 0;
         setTimeout(() => (this.buttonDisabeld = false), this.timeout);
       }
     },

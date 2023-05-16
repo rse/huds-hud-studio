@@ -23,32 +23,32 @@
 ##
 
 id:
-    peer:                  "training-peer"
+  peer: "training-peer"
 
 insert:
-    canvasWidth:           1920                      # width  (in pixels) of the canvas this LT is embedded into
-    canvasHeight:          1080                      # height (in pixels) of the canvas this LT is embedded into
+  canvasWidth: 1920 # width  (in pixels) of the canvas this LT is embedded into
+  canvasHeight: 1080 # height (in pixels) of the canvas this LT is embedded into
 
-    boxBackground:         "#f0f0f0e0"               # background color (in RGBA) of the box
-    boxXpos:               100                       # X ("left") position of text box
-    boxYpos:               880                       # Y ("top") position of text box
-    boxHeight:             60                        # height (in pixels) of text box
-    boxWidth:              auto                      # width (in pixels) of text box
+  boxBackground: "#f0f0f0e0" # background color (in RGBA) of the box
+  boxXpos: 120 # X ("left") position of text box
+  boxYpos: 840 # Y ("top") position of text box
+  boxHeight: 140 # height (in pixels) of text box
+  boxWidth: auto # width (in pixels) of text box
 
-    barWidth:              6                         # width (in pixels) of text box
-    barColor1:             "#b34745"                 # accent bar color 1 (at top, for linear gradient)
-    barColor2:             "#932737"                 # accent bar color 2 (at bottom, for linear gradient)
+  barWidth: 30 # width (in pixels) of text box
+  barColor1: "#b34745" # accent bar color 1 (at top, for linear gradient)
+  barColor2: "#932737" # accent bar color 2 (at bottom, for linear gradient)
 
-    lineText:              ""                        # text               of line (left)
-    lineColor:             "#606060"                 # text color         of line (left)
-    lineShadow:            transparent               # text shadow        of line (left)
-    lineFontFamily:        "TypoPRO Source Sans Pro" # text font family   of line (left)
-    lineFontWeight:        "500"                     # text font weight   of line (left)
-    lineFontStyle:         "normal"                  # text font style    of line (left)
-    linePadding:           30                        # text horizontal padding in text box
+  lineText: "" # text               of line (left)
+  lineColor: "#606060" # text color         of line (left)
+  lineShadow: transparent # text shadow        of line (left)
+  lineFontFamily: "TypoPRO Source Sans Pro" # text font family   of line (left)
+  lineFontWeight: "500" # text font weight   of line (left)
+  lineFontStyle: "normal" # text font style    of line (left)
+  linePadding: 30 # text horizontal padding in text box
 
-    timeDelay:             1000                      # time (in ms) for initially waiting (before coming)
-    timeAnimation1:        250                       # time (in ms) of bar  animation     (coming and going)
-    timeAnimation2:        1500                      # time (in ms) of line animation     (coming and going)
-    timeDuration:          8000                      # time (in ms) for keeping           (before going)
-    timePause:             5000
+  timeDelay: 1000 # time (in ms) for initially waiting (before coming)
+  timeAnimation1: 250 # time (in ms) of bar  animation     (coming and going)
+  timeAnimation2: 1500 # time (in ms) of line animation     (coming and going)
+  timeDuration: 8000 # time (in ms) for keeping           (before going)
+  timePause: 5000
