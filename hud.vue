@@ -34,6 +34,8 @@
             v-bind:titletext="insert.titletext"
             v-bind:titlecolor="insert.titlecolor"
         ></insert>
+        <logo ref="logo" class="logo"
+        ></logo>
     </div>
 </template>
 
@@ -70,12 +72,13 @@ export default {
         config:   huds.config(),
         debug:    typeof huds.options.debug === "boolean" ? huds.options.debug : false,
         banner:   null,
-        logo:     null,
+        logo:     false,
         minimize: false
     }),
     components: {
         "background":    Vue.loadComponent("hud-widget-background.vue"),
         "insert":        Vue.loadComponent("hud-widget-insert.vue"),
+        "logo":          Vue.loadComponent("hud-widget-logo.vue"),
     },
     created () {
         /*  interaction for insert widget  */
@@ -94,6 +97,11 @@ export default {
             if (!(   typeof data.text  === "string" && data.text !== ""))
                 return
             a.set(data.text)
+        })
+
+        huds.bind("logo", (event, data) => {
+            const a = this.$refs.logo
+            a.toggle(data)
         })
 
         /*  interaction for minimization  */

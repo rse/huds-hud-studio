@@ -33,6 +33,7 @@
     <div class="body">
       <div class="ctl">
         <insert ref="insert" class="row"></insert>
+        <logo ref="logo" class="row"></logo>
       </div>
     </div>
 
@@ -54,6 +55,7 @@ export default {
   }),
   components: {
     insert: Vue.loadComponent("ctl-widget-insert.vue"),
+    logo: Vue.loadComponent("ctl-widget-logo.vue"),
   },
   created() {
     huds.bind("insert.toggle", (event, data) => {

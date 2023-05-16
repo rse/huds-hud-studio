@@ -24,54 +24,34 @@
 */
 -->
 
-<template>
-    <div v-bind:style="style" class="logo">
-        <slot></slot>
-    </div>
+<template class="body">
+    <img class="svg" v-if="logoVisible" src = "res/logo_msg_white.svg" alt="msg Logo"/>
+    Hallo
 </template>
 
-<style lang="less" scoped>
-.logo {
-    opacity: var(--opacity);
-    perspective: 300px;
-    svg {
-        transform-origin: 50% 50%;
-        transform-style:  preserve-3d;
-    }
+<style>
+.svg {
+    width: 120px;
+    position: absolute;
+    top: 50px;
+    right: 50px;
 }
 </style>
 
 <script>
 export default {
     name: "logo",
-    props: {
-        opacity: { type: Number, default: 1.0 }
-    },
+    props: {},
+    data: () => ({
+    logoVisible: false
+  }),
     computed: {
         style: HUDS.vueprop2cssvar()
     },
     methods: {
-        animate: (function () {
-            /*  animate the logo  */
-            let i = 0
-            return function () {
-                const tl = anime.timeline({
-                    targets:  this.$el.querySelector("svg"),
-                    duration: 2000,
-                    easing:   "easeInOutQuad"
-                })
-                if (i++ % 2 === 0)
-                    /*  rotate around the X-axis  */
-                    tl.add({ rotateX: [ 0, 360 ] })
-                else
-                    /*  rotate around the Y-axis  */
-                    tl.add({ rotateY: [ 0, 360 ] })
-            }
-        })()
-    },
-    mounted () {
-        /*  animate every 5 minutes or on manual request  */
-        setInterval(() => { this.animate() }, 5 * 60 * 1000)
+        toggle(data) {
+            this.logoVisible=data
+        }
     }
 }
 </script>
