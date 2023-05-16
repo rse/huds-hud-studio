@@ -65,6 +65,11 @@ export default {
       a.toggle();
     });
 
+    huds.bind("returnStatusDisabled", (event, data) => {
+      const a = this.$refs.insert;
+      a.setButton(data)
+    })
+
     /*  receive messages for the attendance channel  */
     huds.bind("attendance", (event, data) => {
       /*  just react on correctly structured messages  */

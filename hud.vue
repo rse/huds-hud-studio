@@ -65,6 +65,8 @@ body {
 </style>
 
 <script>
+import ctl from './ctl.vue'
+
 export default {
     name: "hud",
     data: () => ({
@@ -94,6 +96,10 @@ export default {
             a.toggle(data)
         })
 
+        huds.bind("getStatusDisabled", (event) => {
+            const a = this.$refs.insert
+            a.getStatusDisabled()
+        })
         /*  interaction for minimization  */
         Mousetrap.bind("m", (e) => {
             huds.send("minimize.toggle")

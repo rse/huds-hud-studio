@@ -88,7 +88,7 @@ export default {
     line2:          "",
     line1MaxLength: huds.config().insert.line1MaxLength,
     line2MaxLenght: huds.config().insert.line2MaxLength,
-    buttonDisabeld: false,
+    buttonDisabeld: huds.send("getStatusDisabled"),
     timeout:
       huds.config().insert.timeDelay +
       huds.config().insert.timeAnimation1 * 2 +
@@ -129,9 +129,12 @@ export default {
         huds.send("insert", data);
         this.line1 = "";
         this.line2 = "";
-        setTimeout(() => (this.buttonDisabeld = false), this.timeout);
       }
     },
+
+    async setButton(data){
+      this.buttonDisabeld = data
+    }
   },
 };
 </script>

@@ -75,9 +75,9 @@ export default {
   methods: {
     /*  add an insert */
     async toggleLogo() {
-      /* make one string from the two line input */
+      /* toggle logo visbile*/
       huds.send("logo", !this.logoVisible);
-    },
+    }
   },
 };
 </script>

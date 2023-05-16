@@ -46,8 +46,8 @@ insert:
     lineFontWeight:        "500"                     # text font weight   of line (left)
     lineFontStyle:         "normal"                  # text font style    of line (left)
     linePadding:           30                        # text horizontal padding in text box
-    line1MaxLength:        320                       # max length of line 1
-    line2MaxLength:        160                       # max length of line 2
+    line1MaxLength:        60                       # max length of line 1
+    line2MaxLength:        45                       # max length of line 2
 
     logoXpos:              50
     logoYpos:              40
