@@ -39,10 +39,9 @@
         ref="line1"
         v-model="line1"
         :maxlength="line1MaxLength"
-        @input="countChars(1, line1)"
         v-on:keyup.enter="sendText"
       />
-      <p>({{ line1Length }}/{{ line1MaxLength }})</p>
+      <p>({{ line1.length }}/{{ line1MaxLength }})</p>
     </div>
     <div class="control">
       <div class="label1">Text Zeile 2:</div>
@@ -51,10 +50,9 @@
         ref="line2"
         v-model="line2"
         :maxlength="line2MaxLenght"
-        @input="countChars(2, line2)"
         v-on:keyup.enter="sendText"
       />
-      <p>({{ line2Length }}/{{ line2MaxLenght }})</p>
+      <p>({{ line2.length }}/{{ line2MaxLenght }})</p>
       <div
         class="button"
         :class="{ disabled: buttonDisabeld }"
@@ -89,8 +87,6 @@ export default {
     text: "",
     line1: "",
     line2: "",
-    line1Length: 0,
-    line2Length: 0,
     line1MaxLength: huds.config().insert.line1MaxLength,
     line2MaxLenght: huds.config().insert.line2MaxLength,
     buttonDisabeld: false,
@@ -123,10 +119,10 @@ export default {
         let txt;
         this.buttonDisabeld = true;
 
-        if (this.line1Length > 0 && this.line2Length == 0) txt = this.line1;
-        else if (this.line1Length == 0 && this.line2Length > 0)
+        if (this.line1.length > 0 && this.line2.length == 0) txt = this.line1;
+        else if (this.line1.length == 0 && this.line2.length > 0)
           txt = this.line2;
-        else if (this.line1Length > 0 && this.line2Length > 0)
+        else if (this.line1.length > 0 && this.line2.length > 0)
           txt = this.line1 + "\n" + this.line2;
         else return;
         const data = { text: txt };
@@ -134,17 +130,7 @@ export default {
         huds.send("insert", data);
         this.line1 = "";
         this.line2 = "";
-        this.line1Length = 0;
-        this.line2Length = 0;
         setTimeout(() => (this.buttonDisabeld = false), this.timeout);
-      }
-    },
-
-    async countChars(line, input) {
-      if (line == 1) {
-        this.line1Length = input.length;
-      } else if (line == 2) {
-        this.line2Length = input.length;
       }
     },
   },
