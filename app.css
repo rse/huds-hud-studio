@@ -294,7 +294,7 @@ html {
 .app-control .control {
   background-color: var(--color-std-bg-4);
   display: grid;
-  grid-template-columns: auto auto auto 1fr;
+  grid-template-columns: auto auto 70px auto 1fr;
   grid-template-rows: auto;
   justify-items: start;
   align-items: center;
@@ -364,6 +364,13 @@ html {
 .app-control .control .button:hover {
   background-color: var(--color-std-fg-5);
   color: var(--color-std-bg-1);
+}
+
+.disabled {
+  background-color: #ccc !important;
+  color: #aaa !important;
+  cursor: not-allowed !important;
+  opacity: 0.7 !important;
 }
 .app-control .control input.text {
   background-color: var(--color-acc-bg-3);

@@ -23,14 +23,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 -->
-<!---
-<template>
-    <div>
-        <input type="text" v-model="text"/>
-        <button v-on:click="sendText">Send message</button>
-    </div>
-</template>
--->
+
 <template>
   <div class="tabs-level-1">
     <!--  ==== MONITOR ====  -->
@@ -43,22 +36,32 @@
       <div class="label1">Text Zeile 1:</div>
       <input
         class="text"
+        ref="line1"
         v-model="line1"
-        maxlength="320"
-        @input="countCharsLine1(line1)"
+        :maxlength="line1MaxLength"
+        @input="countChars(1, line1)"
+        v-on:keyup.enter="sendText"
       />
-      <p>({{ line1Length }}/320)</p>
+      <p>({{ line1Length }}/{{ line1MaxLength }})</p>
     </div>
     <div class="control">
       <div class="label1">Text Zeile 2:</div>
       <input
         class="text"
+        ref="line2"
         v-model="line2"
-        maxlength="160"
-        @input="countCharsLine2(line2)"
+        :maxlength="line2MaxLenght"
+        @input="countChars(2, line2)"
+        v-on:keyup.enter="sendText"
       />
-      <p>({{ line2Length }}/160)</p>
-      <div class="button" v-on:click="sendText(line1, line2)">Send</div>
+      <p>({{ line2Length }}/{{ line2MaxLenght }})</p>
+      <div
+        class="button"
+        :class="{ disabled: buttonDisabeld }"
+        v-on:click="sendText"
+      >
+        Send
+      </div>
     </div>
   </div>
 </template>
@@ -84,8 +87,19 @@ export default {
   },
   data: () => ({
     text: "",
+    line1: "",
+    line2: "",
     line1Length: 0,
     line2Length: 0,
+    line1MaxLength: 320,
+    line2MaxLenght: 160,
+    buttonDisabeld: false,
+    timeout:
+      huds.config().insert.timeDelay +
+      huds.config().insert.timeAnimation1 * 2 +
+      huds.config().insert.timeAnimation2 * 2 +
+      huds.config().insert.timeDuration +
+      huds.config().insert.timePause,
     queue: [],
     popups: [],
     attendees: {},
@@ -103,25 +117,35 @@ export default {
   },
   methods: {
     /*  add an insert */
-    async sendText(line1, line2) {
+    async sendText() {
       /* make one string from the two line input */
-      let txt;
-      if      (this.line1Length > 0   &&  this.line2Length == 0)  txt = line1;        
-      else if (this.line1Length == 0  &&  this.line2Length > 0)   txt = line2;        
-      else if (this.line1Length > 0   &&  this.line2Length > 0)   txt = line1 + "\n" + line2;
-      else                                                        return;
-      const data = { text: txt };
+      if (!this.buttonDisabeld) {
+        let txt;
+        this.buttonDisabeld = true;
 
-      /* send string to subscribers */
-      huds.send("insert", data);
+        if (this.line1Length > 0 && this.line2Length == 0) txt = this.line1;
+        else if (this.line1Length == 0 && this.line2Length > 0)
+          txt = this.line2;
+        else if (this.line1Length > 0 && this.line2Length > 0)
+          txt = this.line1 + "\n" + this.line2;
+        else return;
+        const data = { text: txt };
+
+        huds.send("insert", data);
+        this.line1 = "";
+        this.line2 = "";
+        this.line1Length = 0;
+        this.line2Length = 0;
+        setTimeout(() => (this.buttonDisabeld = false), this.timeout);
+      }
     },
 
-    async countCharsLine1(line1) {
-      this.line1Length = line1.length;
-    },
-
-    async countCharsLine2(line2) {
-      this.line2Length = line2.length;
+    async countChars(line, input) {
+      if (line == 1) {
+        this.line1Length = input.length;
+      } else if (line == 2) {
+        this.line2Length = input.length;
+      }
     },
   },
 };
