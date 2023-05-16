@@ -46,6 +46,13 @@ insert:
     lineFontWeight:        "500"                     # text font weight   of line (left)
     lineFontStyle:         "normal"                  # text font style    of line (left)
     linePadding:           30                        # text horizontal padding in text box
+    line1MaxLength:        320                       # max length of line 1
+    line2MaxLength:        160                       # max length of line 2
+
+    logoXpos:              50
+    logoYpos:              40
+    logoWidth:             180
+    logoPath:              "res/logo_msg_white.svg"  
 
     timeDelay:             1000                      # time (in ms) for initially waiting (before coming)
     timeAnimation1:        250                       # time (in ms) of bar  animation     (coming and going)

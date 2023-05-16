@@ -25,16 +25,20 @@
 -->
 
 <template class="body">
-    <img class="svg" v-if="logoVisible" src = "res/logo_msg_white.svg" alt="msg Logo"/>
-    Hallo
+    <img class="svg"
+    v-if="logoVisible"
+    v-bind:style="{
+        width: config.insert.logoWidth + 'px',
+        top: config.insert.logoYpos + 'px',
+        right: config.insert.logoXpos + 'px'
+        }"
+    :src = "config.insert.logoPath"
+    alt="msg Logo"/>
 </template>
 
 <style>
 .svg {
-    width: 120px;
     position: absolute;
-    top: 50px;
-    right: 50px;
 }
 </style>
 
@@ -43,7 +47,8 @@ export default {
     name: "logo",
     props: {},
     data: () => ({
-    logoVisible: false
+    logoVisible: true,
+    config: huds.config(),
   }),
     computed: {
         style: HUDS.vueprop2cssvar()

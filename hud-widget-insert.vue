@@ -163,23 +163,20 @@ export default {
       });
 
       /*  going: line 1 */
-      /*
             tl.add({
                 targets:   elLine,
                 duration:  def.timeAnimation2,
                 easing:    "easeInSine",
                 left:      [ lineEndPos, lineStartPos ] 
             })
-            */
+
       /*  going: bar  */
-      /*
             tl.add({
                 targets:   elBar,
                 duration:  def.timeAnimation1,
                 easing:    "easeInSine",
                 top:       [ barEndPos, barStartPos ]
             })
-            */
     },
 
     /* calculate the width and height of a text string based on font and font size */

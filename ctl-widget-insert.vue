@@ -91,8 +91,8 @@ export default {
     line2: "",
     line1Length: 0,
     line2Length: 0,
-    line1MaxLength: 320,
-    line2MaxLenght: 160,
+    line1MaxLength: huds.config().insert.line1MaxLength,
+    line2MaxLenght: huds.config().insert.line2MaxLength,
     buttonDisabeld: false,
     timeout:
       huds.config().insert.timeDelay +
