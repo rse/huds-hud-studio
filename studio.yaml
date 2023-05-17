@@ -32,10 +32,10 @@ insert:
     boxBackground:         "#f0f0f0e0"               # background color (in RGBA) of the box
     boxXpos:               120                       # X ("left") position of text box
     boxYpos:               840                       # Y ("top") position of text box
-    boxHeight:             140                        # height (in pixels) of text box
+    boxHeight:             140                       # height (in pixels) of text box
     boxWidth:              auto                      # width (in pixels) of text box
 
-    barWidth:              15                         # width (in pixels) of text box
+    barWidth:              15                        # width (in pixels) of text box
     barColor1:             "#b34745"                 # accent bar color 1 (at top, for linear gradient)
     barColor2:             "#932737"                 # accent bar color 2 (at bottom, for linear gradient)
 
@@ -46,8 +46,8 @@ insert:
     lineFontWeight:        "500"                     # text font weight   of line (left)
     lineFontStyle:         "normal"                  # text font style    of line (left)
     linePadding:           30                        # text horizontal padding in text box
-    line1MaxLength:        60                       # max length of line 1
-    line2MaxLength:        45                       # max length of line 2
+    line1MaxLength:        140                       # max length of line 1
+    line2MaxLength:        70                        # max length of line 2
 
     logoXpos:              50
     logoYpos:              40

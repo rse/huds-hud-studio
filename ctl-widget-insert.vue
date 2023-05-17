@@ -39,6 +39,7 @@
         v-model="line1"
         :maxlength="line1MaxLength"
         v-on:keyup.enter="sendText"
+        @input="checkNull"
       />
       <p>({{ line1.length }}/{{ line1MaxLength }})</p>
     </div>
@@ -50,6 +51,7 @@
         v-model="line2"
         :maxlength="line2MaxLenght"
         v-on:keyup.enter="sendText"
+        @input="checkNull"
       />
       <p>({{ line2.length }}/{{ line2MaxLenght }})</p>
       <div
@@ -88,13 +90,13 @@ export default {
     line2:          "",
     line1MaxLength: huds.config().insert.line1MaxLength,
     line2MaxLenght: huds.config().insert.line2MaxLength,
-    buttonDisabeld: huds.send("getStatusDisabled"),
-    timeout:
-      huds.config().insert.timeDelay +
-      huds.config().insert.timeAnimation1 * 2 +
-      huds.config().insert.timeAnimation2 * 2 +
-      huds.config().insert.timeDuration +
-      huds.config().insert.timePause,
+    buttonDisabeld: true,
+    hudDisabled:    huds.send("getStatusDisabled"),
+    timeout:        huds.config().insert.timeDelay +
+                    huds.config().insert.timeAnimation1 * 2 +
+                    huds.config().insert.timeAnimation2 * 2 +
+                    huds.config().insert.timeDuration +
+                    huds.config().insert.timePause,
     queue:          [],
     popups:         [],
     attendees:      {},
@@ -111,6 +113,19 @@ export default {
     return { boxes };
   },
   methods: {
+
+    async checkNull() {
+      if(this.line1 == "" && this.line2 == "") {
+        this.buttonDisabeld = true
+      } else {
+        this.buttonDisabeld = this.hudDisabled
+      }
+    },
+
+    async setButtonDisabled(data) {
+      this.hudDisabled = data
+      this.checkNull()
+    },
     /*  add an insert */
     async sendText() {
       /* make one string from the two line input */
@@ -118,24 +133,24 @@ export default {
         let txt;
         this.buttonDisabeld = true;
 
-        if (this.line1.length > 0 && this.line2.length == 0) txt = this.line1;
-        else if (this.line1.length == 0 && this.line2.length > 0)
+        if (this.line1.length > 0 && this.line2.length == 0) {
+          txt = this.line1;
+        }
+        else if (this.line1.length == 0 && this.line2.length > 0) {
           txt = this.line2;
-        else if (this.line1.length > 0 && this.line2.length > 0)
+        }
+        else if (this.line1.length > 0 && this.line2.length > 0) {
           txt = this.line1 + "\n" + this.line2;
+        }
         else {
           this.buttonDisabeld = false
-          return;}
+          return
+        }
         const data = { text: txt };
-
         huds.send("insert", data);
         this.line1 = "";
         this.line2 = "";
       }
-    },
-
-    async setButton(data){
-      this.buttonDisabeld = data
     }
   },
 };
