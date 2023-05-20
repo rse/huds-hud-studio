@@ -49,13 +49,15 @@ insert:
     line1MaxLength:        140                       # max length of line 1
     line2MaxLength:        70                        # max length of line 2
 
-    logoXpos:              50
-    logoYpos:              40
-    logoWidth:             180
-    logoPath:              "res/logo_msg_white.svg"  
-
     timeDelay:             1000                      # time (in ms) for initially waiting (before coming)
     timeAnimation1:        250                       # time (in ms) of bar  animation     (coming and going)
     timeAnimation2:        1500                      # time (in ms) of line animation     (coming and going)
     timeDuration:          8000                      # time (in ms) for keeping           (before going)
     timePause:             5000
+
+logo:
+    logoXpos:              50
+    logoYpos:              40
+    logoWidth:             180
+    opacity:               0.9
+    logoPath:              "res/logo_msg_white.svg"

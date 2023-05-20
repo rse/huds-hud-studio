@@ -134,7 +134,7 @@ export default {
         /*  calculate start and end position for animation  */
         const barStartPos = 1 + 2 + def.boxHeight + 4;
         const barEndPos = 0;
-        const lineStartPos = -textWidth - 2 * def.linePadding;
+        const lineStartPos = -textWidth - 2 * def.linePadding - 300; //-300 for extra safety
         const lineEndPos = 0;
 
         /*  set proper vertical alignment for one and two line text */

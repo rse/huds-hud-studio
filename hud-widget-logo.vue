@@ -28,18 +28,19 @@
     <img class="svg"
     v-if="logoVisible"
     v-bind:style="{
-        width: config.insert.logoWidth + 'px',
-        top:   config.insert.logoYpos  + 'px',
-        right: config.insert.logoXpos  + 'px'
+        width: config.logo.logoWidth + 'px',
+        top:   config.logo.logoYpos  + 'px',
+        right: config.logo.logoXpos  + 'px',
+        opacity: config.logo.opacity
         }"
-    :src = "config.insert.logoPath"
+    :src = "config.logo.logoPath"
     alt="msg Logo"/>
 </template>
 
 <style>
 .svg {
     position: absolute;
-}
+    }
 </style>
 
 <script>
